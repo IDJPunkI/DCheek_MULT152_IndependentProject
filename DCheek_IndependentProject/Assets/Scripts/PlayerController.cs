@@ -30,12 +30,12 @@ public class PlayerController : MonoBehaviour
 
         // Mouse look
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         transform.Rotate(0, mouseX, 0);
 
-        rotationX -= mouseY;
+        //rotationX -= mouseY;
         rotationX = Mathf.Clamp(rotationX, -verticalRotationLimit, verticalRotationLimit);
-        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        playerCamera.transform.localRotation = Quaternion.Euler((rotationX + 7.038f), 0, 0);
     }
 }

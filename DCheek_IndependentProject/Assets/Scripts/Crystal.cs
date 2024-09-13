@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Crystal : MonoBehaviour
 {
-    public GameManager gameManager;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        GameObject gameManagerObject = GameObject.Find("Game Manager");
 
+        if (gameManagerObject != null)
+        {
+            gameManager = gameManagerObject.GetComponent<GameManager>();
+        }
     }
 
     // Update is called once per frame

@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Reset();
+
         int randomAmount = UnityEngine.Random.Range(6, 36);
         
         for (int i = 0; i < randomAmount; i++)
@@ -50,16 +52,29 @@ public class GameManager : MonoBehaviour
         {
             WaterCrystal += 1;
         }
-        else
+        else if (crystalType == "EarthCrystal")
         {
             EarthCrystal += 1;
+        }
+        else
+        {
+            Reset();
         }
     }
 
     public void RestartGame()
     {
+        Reset();
+        
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         SceneManager.LoadScene(currentSceneName);
+    }
+
+    public void Reset()
+    {
+        FireCrystal = 0;
+        WaterCrystal = 0;
+        EarthCrystal = 0;
     }
 }

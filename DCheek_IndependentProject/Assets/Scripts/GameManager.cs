@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-
     public GameObject FireObject;
     public GameObject WaterObject;
     public GameObject EarthObject;

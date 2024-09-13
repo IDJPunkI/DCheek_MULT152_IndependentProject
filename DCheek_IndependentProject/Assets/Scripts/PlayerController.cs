@@ -5,19 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public GameManager gameManager;
     public float speed = 5.0f;
     public float mouseSensitivity = 2.0f;
     public float verticalRotationLimit = 80.0f;
     public float gravity = -200.0f;
     public float jumpForce = 100.0f;
 
+    private GameManager gameManager;
     private CharacterController controller;
     private float rotationX = 0;
     private Vector3 velocity;
 
     void Start()
     {
+        GameObject gameManagerObject = GameObject.Find("Game Manager");
+
+        if (gameManagerObject != null)
+        {
+            gameManager = gameManagerObject.GetComponent<GameManager>();
+        }
+
         controller = GetComponent<CharacterController>();
     }
 
@@ -58,6 +65,25 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Lake"))
         {
             gameManager.RestartGame();
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("HomeBase"))
+        {
+            if (Input.GetButtonDown("Create Fire Golem"))
+            {
+                gameManager.FireGolemCreation();
+            }
+            else if (Input.GetButtonDown("Create Water Golem"))
+            {
+                gameManager.WaterGolemCreation();
+            }
+            else if (Input.GetButtonDown("Create Earth Golem"))
+            {
+                gameManager.EarthGolemCreation();
+            }
         }
     }
 }

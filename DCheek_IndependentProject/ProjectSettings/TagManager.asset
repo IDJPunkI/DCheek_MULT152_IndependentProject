@@ -8,6 +8,8 @@ TagManager:
   - FireCrystal
   - EarthCrystal
   - Lake
+  - HomeBase
+  - Wall
   layers:
   - Default
   - TransparentFX

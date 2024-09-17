@@ -10,6 +10,7 @@ TagManager:
   - Lake
   - HomeBase
   - Wall
+  - Terrain
   layers:
   - Default
   - TransparentFX

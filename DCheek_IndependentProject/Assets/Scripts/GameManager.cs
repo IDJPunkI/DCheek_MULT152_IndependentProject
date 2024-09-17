@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
     public int EarthCrystal = 0;
+    public int FireCrystalCurrent = 0;
+    public int WaterCrystalCurrent = 0;
+    public int EarthCrystalCurrent = 0;
     public int FireGolem = 0;
     public int WaterGolem = 0;
     public int EarthGolem = 0;
@@ -33,14 +36,17 @@ public class GameManager : MonoBehaviour
             float randomX = UnityEngine.Random.Range(-200, 650);
             float randomZ = UnityEngine.Random.Range(-291, 589);
             Instantiate(FireObject, new Vector3(randomX, 212.5513f, randomZ), Quaternion.identity);
+            FireCrystalCurrent++;
 
             randomX = UnityEngine.Random.Range(-200, 650);
             randomZ = UnityEngine.Random.Range(-291, 589);
             Instantiate(WaterObject, new Vector3(randomX, 212.5513f, randomZ), Quaternion.identity);
+            WaterCrystalCurrent++;
 
             randomX = UnityEngine.Random.Range(-200, 650);
             randomZ = UnityEngine.Random.Range(-291, 589);
             Instantiate(EarthObject, new Vector3(randomX, 212.5513f, randomZ), Quaternion.identity);
+            EarthCrystalCurrent++;
         }
     }
 

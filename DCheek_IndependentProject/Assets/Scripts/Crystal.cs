@@ -33,4 +33,22 @@ public class Crystal : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnDestroy()
+    {
+        string crystalTag = gameObject.tag;
+
+        if (crystalTag == "FireCrystal")
+        {
+            gameManager.FireCrystalCurrent -= 1;
+        }
+        else if (crystalTag == "WaterCrystal")
+        {
+            gameManager.WaterCrystalCurrent -= 1;
+        }
+        else if (crystalTag == "EarthCrystal")
+        {
+            gameManager.EarthCrystalCurrent -= 1;
+        }
+    }
 }

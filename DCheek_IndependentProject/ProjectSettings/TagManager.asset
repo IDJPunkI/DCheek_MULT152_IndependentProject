@@ -11,6 +11,8 @@ TagManager:
   - HomeBase
   - Wall
   - Terrain
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX

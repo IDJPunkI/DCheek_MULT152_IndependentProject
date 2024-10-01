@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 {
     private GameObject Player;
     public float speed = 100.0f;
+
+    private AudioSource audioSource;
     private Vector3 direction = new Vector3(0, 0, 0);
 
     // Start is called before the first frame update
@@ -14,6 +16,8 @@ public class Bullet : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         direction = (Player.transform.position - transform.position).normalized;
         Destroy(gameObject, 20f);
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
     }
 
     // Update is called once per frame

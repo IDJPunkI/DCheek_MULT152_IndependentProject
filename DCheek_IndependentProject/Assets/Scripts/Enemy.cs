@@ -7,10 +7,11 @@ using Random = UnityEngine.Random;
 public class Enemy : MonoBehaviour
 {
     public GameObject Bullet;
-    private GameObject Player;
     public Transform bulletSpawnPoint;
-    public float firingDistance = 250f;
+    public float firingDistance = 300f;
 
+    private GameObject Player;
+    private PlayerController playerController;
     private Coroutine firingCoroutine;
     private bool isFiring = false;
 
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindWithTag("Player");
+        playerController = Player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -39,6 +41,12 @@ public class Enemy : MonoBehaviour
                 StopCoroutine(firingCoroutine);
                 isFiring = false;
             }
+        }
+
+        if ((playerController.death == true) && (firingCoroutine != null))
+        {
+            StopCoroutine(firingCoroutine);
+            isFiring = true;
         }
     }
 

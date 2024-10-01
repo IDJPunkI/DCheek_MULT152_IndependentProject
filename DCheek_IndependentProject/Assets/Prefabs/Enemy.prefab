@@ -211,4 +211,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 6008596476962366104, guid: 2416409bb5b5aa34a80e3be77db138e1, type: 3}
   bulletSpawnPoint: {fileID: 1331837589601464539}
-  firingDistance: 250
+  firingDistance: 300

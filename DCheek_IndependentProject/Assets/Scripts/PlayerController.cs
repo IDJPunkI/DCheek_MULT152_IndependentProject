@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log("Player Position: " + transform.position);
+
         float moveDirectionX = Input.GetAxis("Horizontal");
         float moveDirectionZ = Input.GetAxis("Vertical");
 
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Lake"))
+        if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
         {
             gameManager.RestartGame();
         }

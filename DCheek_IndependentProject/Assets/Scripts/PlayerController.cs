@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private float rotationX = 0;
     private Vector3 velocity;
+    private bool isWithinHomeBase = false;
     
     void Start()
     {
@@ -64,11 +65,34 @@ public class PlayerController : MonoBehaviour
 
             transform.Rotate(0, mouseX, 0);
             rotationX = Mathf.Clamp(rotationX, -verticalRotationLimit, verticalRotationLimit);
+
+            if (isWithinHomeBase) // Assuming you set this boolean when entering/exiting the trigger
+            {
+                if (Input.GetButtonDown("Create Fire Golem"))
+                {
+                    print("Creating Fire Golem");
+                    gameManager.FireGolemCreation();
+                }
+                else if (Input.GetButtonDown("Create Water Golem"))
+                {
+                    print("Creating Water Golem");
+                    gameManager.WaterGolemCreation();
+                }
+                else if (Input.GetButtonDown("Create Earth Golem"))
+                {
+                    print("Creating Earth Golem");
+                    gameManager.EarthGolemCreation();
+                }
+            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("HomeBase"))
+        {
+            isWithinHomeBase = true;
+        }
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
         {
             death = true;
@@ -84,12 +108,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    /*void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("HomeBase"))
         {
+            print("withhin bounds");
             if (Input.GetButtonDown("Create Fire Golem"))
             {
+                print("Fire");
                 gameManager.FireGolemCreation();
             }
             else if (Input.GetButtonDown("Create Water Golem"))
@@ -100,6 +126,14 @@ public class PlayerController : MonoBehaviour
             {
                 gameManager.EarthGolemCreation();
             }
+        }
+    }*/
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("HomeBase"))
+        {
+            isWithinHomeBase = false;
         }
     }
 

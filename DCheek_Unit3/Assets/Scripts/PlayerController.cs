@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool spaceDown = Input.GetKeyDown(KeyCode.Space);
-        if (spaceDown && onGround)
+        if (spaceDown && onGround && !gameOver)
         {
             // jump code
             rbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);

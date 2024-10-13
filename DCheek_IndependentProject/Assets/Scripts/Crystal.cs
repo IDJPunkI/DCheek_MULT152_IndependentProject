@@ -32,6 +32,10 @@ public class Crystal : MonoBehaviour
             gameManager.AddCrystal(crystalTag);
             Destroy(gameObject);
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnDestroy()

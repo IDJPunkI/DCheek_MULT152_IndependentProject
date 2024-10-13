@@ -96,8 +96,13 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
         {
             death = true;
-            Renderer renderer = GetComponent<Renderer>();
+            SkinnedMeshRenderer renderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            MeshRenderer staff = GetComponentInChildren<MeshRenderer>();
             renderer.enabled = false;
+            if (staff.CompareTag("Staff"))
+            {
+                staff.enabled = false;
+            }
             audioSources[0].Play();
             StartCoroutine(Restart(2.0f));
         }
@@ -107,27 +112,6 @@ public class PlayerController : MonoBehaviour
             audioSources[1].Play();
         }
     }
-
-    /*void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("HomeBase"))
-        {
-            print("withhin bounds");
-            if (Input.GetButtonDown("Create Fire Golem"))
-            {
-                print("Fire");
-                gameManager.FireGolemCreation();
-            }
-            else if (Input.GetButtonDown("Create Water Golem"))
-            {
-                gameManager.WaterGolemCreation();
-            }
-            else if (Input.GetButtonDown("Create Earth Golem"))
-            {
-                gameManager.EarthGolemCreation();
-            }
-        }
-    }*/
 
     private void OnTriggerExit(Collider other)
     {

@@ -863,6 +863,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7082875650387391567, guid: 0194af0a052415942bbfe9d6bb002df1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082875650387391567, guid: 0194af0a052415942bbfe9d6bb002df1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082875650387391567, guid: 0194af0a052415942bbfe9d6bb002df1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8240083682830294036, guid: 0194af0a052415942bbfe9d6bb002df1, type: 3}
       propertyPath: m_Name
       value: Bubble Orb  1

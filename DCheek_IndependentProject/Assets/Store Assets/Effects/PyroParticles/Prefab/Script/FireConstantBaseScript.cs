@@ -41,7 +41,7 @@ namespace DigitalRuby.PyroParticles
             if (AudioSource != null && !AudioSource.isPlaying)
             {
                 AudioSource.volume = 0.0f;
-                AudioSource.Play();
+                //AudioSource.Play();
                 currentMultiplier = startMultiplier;
             }
             TargetVolume = targetVolume;

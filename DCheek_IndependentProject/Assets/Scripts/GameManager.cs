@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         Reset();
 
-        int randomAmount = UnityEngine.Random.Range(6, 36);
+        int randomAmount = UnityEngine.Random.Range(12, 50);
         
         for (int i = 0; i < randomAmount; i++)
         {
@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
             Instantiate(EarthObject, new Vector3(randomX, 212.5513f, randomZ), Quaternion.identity);
             EarthCrystalCurrent++;
         }
+
     }
 
     // Update is called once per frame

@@ -38,6 +38,11 @@ public class Crystal : MonoBehaviour
         }
     }
 
+    void OnTriggerStay(Collider other)
+    {
+        Destroy(gameObject);
+    }
+
     private void OnDestroy()
     {
         string crystalTag = gameObject.tag;

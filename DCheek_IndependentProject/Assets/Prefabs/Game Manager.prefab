@@ -51,6 +51,7 @@ MonoBehaviour:
   FireGolemObject: {fileID: 1067925524328404, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}
   WaterGolemObject: {fileID: 1067925524328404, guid: 8497aa4dde6076b409573a61445368dc, type: 3}
   EarthGolemObject: {fileID: 1067925524328404, guid: 975c91edcd6a5e04fb248f00ff833c01, type: 3}
+  Player: {fileID: 1953271650171834, guid: 916309925953d704e99a3e8bbe7df453, type: 3}
   FireCrystal: 0
   WaterCrystal: 0
   EarthCrystal: 0

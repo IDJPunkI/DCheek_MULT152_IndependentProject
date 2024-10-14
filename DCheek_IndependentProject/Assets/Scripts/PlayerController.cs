@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5.0f;
+    public float speed = 15.0f;
     public float mouseSensitivity = 2.0f;
     public float verticalRotationLimit = 80.0f;
     public float gravity = -200.0f;
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float rotationX = 0;
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
-    
+
     void Start()
     {
         GameObject gameManagerObject = GameObject.Find("Game Manager");
@@ -42,6 +42,16 @@ public class PlayerController : MonoBehaviour
 
             Vector3 move = new Vector3(moveDirectionX, 0, moveDirectionZ);
             move = transform.TransformDirection(move);
+
+            // If the Shift key is pressed, increase the speed
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                speed = 30;
+            }
+            else
+            {
+                speed = 15;
+            }
 
             velocity.x = move.x * speed;
             velocity.z = move.z * speed;
@@ -123,4 +133,5 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(delay);
         gameManager.RestartGame();
     }
+
 }

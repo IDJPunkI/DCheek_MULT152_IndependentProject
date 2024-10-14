@@ -88,7 +88,7 @@ namespace DigitalRuby.PyroParticles
         {
             if (AudioSource != null)
             {
-                AudioSource.Play();
+                //AudioSource.Play();
             }
 
             // precalculate so we can multiply instead of divide every frame

@@ -48,9 +48,9 @@ MonoBehaviour:
   FireObject: {fileID: 5928907673800009345, guid: 7f4a5aee932dbc74ebee646a981845d0, type: 3}
   WaterObject: {fileID: 4380053887942262419, guid: 08489de59ef1297469d94fff12e24c11, type: 3}
   EarthObject: {fileID: 108012326883433976, guid: 00b69a9aa7fb0174ab6b90e332aef7e1, type: 3}
-  FireGolemObject: {fileID: 1191819852819039168, guid: 37512e3f297b62446819984df52d42e9, type: 3}
-  WaterGolemObject: {fileID: 7411072709842158630, guid: c4e64dcd6136fef43a7f6aa78130f5b0, type: 3}
-  EarthGolemObject: {fileID: 3862748056293827808, guid: 53455a4a862de7746bccb9f2c74c7a46, type: 3}
+  FireGolemObject: {fileID: 1067925524328404, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}
+  WaterGolemObject: {fileID: 1067925524328404, guid: 8497aa4dde6076b409573a61445368dc, type: 3}
+  EarthGolemObject: {fileID: 1067925524328404, guid: 975c91edcd6a5e04fb248f00ff833c01, type: 3}
   FireCrystal: 0
   WaterCrystal: 0
   EarthCrystal: 0

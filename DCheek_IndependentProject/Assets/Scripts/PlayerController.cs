@@ -70,17 +70,14 @@ public class PlayerController : MonoBehaviour
             {
                 if (Input.GetButtonDown("Create Fire Golem"))
                 {
-                    print("Creating Fire Golem");
                     gameManager.FireGolemCreation();
                 }
                 else if (Input.GetButtonDown("Create Water Golem"))
                 {
-                    print("Creating Water Golem");
                     gameManager.WaterGolemCreation();
                 }
                 else if (Input.GetButtonDown("Create Earth Golem"))
                 {
-                    print("Creating Earth Golem");
                     gameManager.EarthGolemCreation();
                 }
             }

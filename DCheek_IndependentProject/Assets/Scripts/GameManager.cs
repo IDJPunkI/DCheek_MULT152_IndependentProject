@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
     {
         if ((Golems[0] == true) & (FireGolem == 0))
         {
-            Instantiate(FireGolemObject, new Vector3(304.5f, 214.0513f, 102.5f), Quaternion.identity);
+            Instantiate(FireGolemObject, new Vector3(329.45f, 211.0513f, 100.7f), Quaternion.Euler(0f, -37.322f, 0f));
             FireCrystal -= 6;
             FireGolem++;
         }
@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
     {
         if ((Golems[1] == true) & (WaterGolem == 0))
         {
-            Instantiate(WaterGolemObject, new Vector3(273.7f, 214.0513f, 139.5f), Quaternion.identity);
+            Instantiate(WaterGolemObject, new Vector3(283.35f, 211.0513f, 96.52f), Quaternion.Euler(0f, 43.495f, 0f));
             WaterCrystal -= 6;
             WaterGolem++;
         }
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
     {
         if ((Golems[2] == true) & (EarthGolem == 0))
         {
-            Instantiate(EarthGolemObject, new Vector3(320.6f, 214.0513f, 137.3f), Quaternion.identity);
+            Instantiate(EarthGolemObject, new Vector3(280.2f, 211.0513f, 155.5f), Quaternion.Euler(0f, 123.736f, 0f));
             EarthCrystal -= 6;
             EarthGolem++;
         }

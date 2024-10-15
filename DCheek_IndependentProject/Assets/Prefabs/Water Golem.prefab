@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 2422570840524539081}
   m_Layer: 0
   m_Name: Water Golem
-  m_TagString: Untagged
+  m_TagString: WaterGolem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1126,6 +1126,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4408297863206454}
     m_Modifications:
+    - target: {fileID: 463418570678965734, guid: 0194af0a052415942bbfe9d6bb002df1, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844240191773434246, guid: 0194af0a052415942bbfe9d6bb002df1, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6782906940885567242, guid: 0194af0a052415942bbfe9d6bb002df1, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: -1646568006313760050}
   m_Layer: 0
   m_Name: Fire Golem
-  m_TagString: Untagged
+  m_TagString: FireGolem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1175,6 +1175,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8281866, guid: 062893e7007e39441aea009115b6cefa, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11469812, guid: 062893e7007e39441aea009115b6cefa, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471502, guid: 062893e7007e39441aea009115b6cefa, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}

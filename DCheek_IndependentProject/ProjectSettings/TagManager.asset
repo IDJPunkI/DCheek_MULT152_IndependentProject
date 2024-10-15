@@ -14,6 +14,9 @@ TagManager:
   - Enemy
   - Bullet
   - Staff
+  - FireGolem
+  - EarthGolem
+  - WaterGolem
   layers:
   - Default
   - TransparentFX

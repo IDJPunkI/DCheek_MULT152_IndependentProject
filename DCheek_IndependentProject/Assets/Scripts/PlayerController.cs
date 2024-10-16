@@ -12,19 +12,19 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 100.0f;
     public bool death = false;
 
+    private Animator animPlayer;
     private AudioSource[] audioSources;
     private GameManager gameManager;
     private CharacterController controller;
     private float rotationX = 0;
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
-    private bool walking = false;
-    private bool running = false;
-    private bool jumping = false;
 
     void Start()
     {
         GameObject gameManagerObject = GameObject.Find("Game Manager");
+
+        animPlayer = GetComponent<Animator>();
         audioSources = GetComponents<AudioSource>();
 
         if (gameManagerObject != null)
@@ -46,20 +46,25 @@ public class PlayerController : MonoBehaviour
             Vector3 move = new Vector3(moveDirectionX, 0, moveDirectionZ);
             move = transform.TransformDirection(move);
 
+            velocity.x = move.x * speed;
+            velocity.z = move.z * speed;
+
             // If the Shift key is pressed, increase the speed
             if (Input.GetKey(KeyCode.LeftShift) && controller.isGrounded)
             {
+                animPlayer.SetFloat("Speed", 10f); // Run
                 speed = 30;
-                running = true;
+            }
+            else if (move.magnitude > 0)
+            {
+                animPlayer.SetFloat("Speed", 5f); // Walk
+                speed = 15;
             }
             else
             {
+                animPlayer.SetFloat("Speed", 0f); // Idle
                 speed = 15;
-                running = false;
             }
-
-            velocity.x = move.x * speed;
-            velocity.z = move.z * speed;
 
             // Apply gravity
             if (controller.isGrounded)
@@ -67,13 +72,11 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetButtonDown("Jump")) // Optional: Add jumping
                 {
                     velocity.y = jumpForce;
-                    jumping = true;
                 }
             }
             else
             {
                 velocity.y += gravity * Time.deltaTime;
-                jumping = false;
             }
 
             controller.Move(velocity * Time.deltaTime);
@@ -99,13 +102,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-        else
-        {
-            walking = false;
-            running = false;
-            jumping = false;
-        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -117,13 +113,13 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
         {
             death = true;
-            SkinnedMeshRenderer renderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            /*SkinnedMeshRenderer renderer = GetComponentInChildren<SkinnedMeshRenderer>();
             MeshRenderer staff = GetComponentInChildren<MeshRenderer>();
             renderer.enabled = false;
             if (staff.CompareTag("Staff"))
             {
                 staff.enabled = false;
-            }
+            }*/
             audioSources[0].Play();
             StartCoroutine(Restart(2.0f));
         }

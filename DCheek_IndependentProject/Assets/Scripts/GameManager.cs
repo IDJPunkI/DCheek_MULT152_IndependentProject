@@ -113,9 +113,9 @@ public class GameManager : MonoBehaviour
 
     public void Reset()
     {
-        FireCrystal = 0;
-        WaterCrystal = 0;
-        EarthCrystal = 0;
+        FireCrystal = 6;
+        WaterCrystal = 6;
+        EarthCrystal = 6;
         FireGolem = 0;
         WaterGolem = 0;
         EarthGolem = 0;

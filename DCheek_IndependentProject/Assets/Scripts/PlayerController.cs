@@ -49,34 +49,45 @@ public class PlayerController : MonoBehaviour
             velocity.x = move.x * speed;
             velocity.z = move.z * speed;
 
-            // If the Shift key is pressed, increase the speed
-            if (Input.GetKey(KeyCode.LeftShift) && controller.isGrounded)
-            {
-                animPlayer.SetFloat("Speed", 10f); // Run
-                speed = 30;
-            }
-            else if (move.magnitude > 0)
-            {
-                animPlayer.SetFloat("Speed", 5f); // Walk
-                speed = 15;
-            }
-            else
-            {
-                animPlayer.SetFloat("Speed", 0f); // Idle
-                speed = 15;
-            }
 
             // Apply gravity
             if (controller.isGrounded)
             {
                 if (Input.GetButtonDown("Jump")) // Optional: Add jumping
                 {
+                    animPlayer.SetBool("Jump", true);
                     velocity.y = jumpForce;
+                    speed = 15;
                 }
+
+                else 
+                {
+                    animPlayer.SetBool("Jump", false);
+
+                    // If the Shift key is pressed, increase the speed
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        animPlayer.SetFloat("Speed", 10f); // Run
+                        speed = 30;
+                    }
+                    else if (move.magnitude > 0)
+                    {
+                        animPlayer.SetFloat("Speed", 5f); // Walk
+                        speed = 15;
+                    }
+                    else
+                    {
+                        animPlayer.SetFloat("Speed", 0f); // Idle
+                        speed = 15;
+                    }
+                }
+
             }
             else
             {
+                //animPlayer.SetBool("Jump", true);
                 velocity.y += gravity * Time.deltaTime;
+                speed = 15;
             }
 
             controller.Move(velocity * Time.deltaTime);
@@ -101,6 +112,12 @@ public class PlayerController : MonoBehaviour
                     gameManager.EarthGolemCreation();
                 }
             }
+        }
+
+        else
+        {
+            animPlayer.SetBool("Jump", false);
+            animPlayer.SetBool("Death", true);
         }
     }
 

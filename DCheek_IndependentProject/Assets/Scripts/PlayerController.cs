@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     private float rotationX = 0;
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
+    private bool walking = false;
+    private bool running = false;
+    private bool jumping = false;
 
     void Start()
     {
@@ -44,13 +47,15 @@ public class PlayerController : MonoBehaviour
             move = transform.TransformDirection(move);
 
             // If the Shift key is pressed, increase the speed
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && controller.isGrounded)
             {
                 speed = 30;
+                running = true;
             }
             else
             {
                 speed = 15;
+                running = false;
             }
 
             velocity.x = move.x * speed;
@@ -62,11 +67,13 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetButtonDown("Jump")) // Optional: Add jumping
                 {
                     velocity.y = jumpForce;
+                    jumping = true;
                 }
             }
             else
             {
                 velocity.y += gravity * Time.deltaTime;
+                jumping = false;
             }
 
             controller.Move(velocity * Time.deltaTime);
@@ -91,6 +98,13 @@ public class PlayerController : MonoBehaviour
                     gameManager.EarthGolemCreation();
                 }
             }
+        }
+
+        else
+        {
+            walking = false;
+            running = false;
+            jumping = false;
         }
     }
 

@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource[] audioSources;
     private GameManager gameManager;
     private CharacterController controller;
+    private ParticleSystem particles;
     private float rotationX = 0;
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
         animPlayer = GetComponent<Animator>();
         audioSources = GetComponents<AudioSource>();
+        particles = GetComponentInChildren<ParticleSystem>();
 
         if (gameManagerObject != null)
         {
@@ -118,6 +120,7 @@ public class PlayerController : MonoBehaviour
         {
             animPlayer.SetBool("Jump", false);
             animPlayer.SetBool("Death", true);
+            particles.Stop();
         }
     }
 
@@ -127,6 +130,7 @@ public class PlayerController : MonoBehaviour
         {
             isWithinHomeBase = true;
         }
+
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
         {
             death = true;
@@ -144,6 +148,21 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("EarthCrystal") || other.CompareTag("FireCrystal") || other.CompareTag("WaterCrystal"))
         {
             audioSources[1].Play();
+        }
+
+        if (other.CompareTag("FireRune"))
+        {
+            gameManager.FireGolemUpgrade();
+        }
+
+        if (other.CompareTag("WaterRune"))
+        {
+            gameManager.WaterGolemUpgrade();
+        }
+
+        if (other.CompareTag("EarthRune"))
+        {
+            gameManager.EarthGolemUpgrade();
         }
     }
 

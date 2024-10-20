@@ -17,6 +17,9 @@ TagManager:
   - FireGolem
   - EarthGolem
   - WaterGolem
+  - FireRune
+  - WaterRune
+  - EarthRune
   layers:
   - Default
   - TransparentFX

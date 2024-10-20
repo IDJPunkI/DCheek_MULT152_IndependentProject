@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
 
     private bool[] Golems = new bool[3];
 
+    private Golem fireGolemController;
+    private Golem waterGolemController;
+    private Golem earthGolemController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -113,9 +117,9 @@ public class GameManager : MonoBehaviour
 
     public void Reset()
     {
-        FireCrystal = 6;
-        WaterCrystal = 6;
-        EarthCrystal = 6;
+        FireCrystal = 0;
+        WaterCrystal = 0;
+        EarthCrystal = 0;
         FireGolem = 0;
         WaterGolem = 0;
         EarthGolem = 0;
@@ -128,9 +132,10 @@ public class GameManager : MonoBehaviour
     {
         if ((Golems[0] == true) & (FireGolem == 0))
         {
-            Instantiate(FireGolemObject, new Vector3(329.45f, 211.0513f, 100.7f), Quaternion.Euler(0f, -37.322f, 0f));
+            GameObject fireGolemInstance = Instantiate(FireGolemObject, new Vector3(329.45f, 211.0513f, 100.7f), Quaternion.Euler(0f, -37.322f, 0f));
             FireCrystal -= 6;
             FireGolem++;
+            fireGolemController = fireGolemInstance.GetComponent<Golem>();
         }
     }
 
@@ -138,9 +143,10 @@ public class GameManager : MonoBehaviour
     {
         if ((Golems[1] == true) & (WaterGolem == 0))
         {
-            Instantiate(WaterGolemObject, new Vector3(283.35f, 211.0513f, 96.52f), Quaternion.Euler(0f, 43.495f, 0f));
+            GameObject waterGolemInstance = Instantiate(WaterGolemObject, new Vector3(283.35f, 211.0513f, 96.52f), Quaternion.Euler(0f, 43.495f, 0f));
             WaterCrystal -= 6;
             WaterGolem++;
+            waterGolemController = waterGolemInstance.GetComponent<Golem>();
         }
     }
 
@@ -148,9 +154,36 @@ public class GameManager : MonoBehaviour
     {
         if ((Golems[2] == true) & (EarthGolem == 0))
         {
-            Instantiate(EarthGolemObject, new Vector3(280.2f, 211.0513f, 155.5f), Quaternion.Euler(0f, 123.736f, 0f));
+            GameObject earthGolemInstance = Instantiate(EarthGolemObject, new Vector3(280.2f, 211.0513f, 155.5f), Quaternion.Euler(0f, 123.736f, 0f));
             EarthCrystal -= 6;
             EarthGolem++;
+            earthGolemController = earthGolemInstance.GetComponent<Golem>();
+        }
+    }
+
+    public void FireGolemUpgrade()
+    {
+        if (FireGolem == 1)
+        {
+            fireGolemController.upgrade = true;
+            print("fire");
+        }
+    }
+
+    public void WaterGolemUpgrade()
+    {
+        if (WaterGolem == 1)
+        {
+            waterGolemController.upgrade = true;
+            print("water");
+        }
+    }
+
+    public void EarthGolemUpgrade()
+    {
+        if (EarthGolem == 1)
+        {
+            earthGolemController.upgrade = true;
         }
     }
 }

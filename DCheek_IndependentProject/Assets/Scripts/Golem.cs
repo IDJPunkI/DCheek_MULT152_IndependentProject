@@ -15,6 +15,7 @@ public class Golem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        upgrade = false;
         audioSources = GetComponents<AudioSource>();
         particles = GetComponentInChildren<ParticleSystem>();
         particles.Stop();

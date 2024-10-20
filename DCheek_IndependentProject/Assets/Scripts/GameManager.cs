@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
         if (FireGolem == 1)
         {
             fireGolemController.upgrade = true;
-            print("fire");
+            fireGolemController.UpgradeSound();
         }
     }
 
@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
         if (WaterGolem == 1)
         {
             waterGolemController.upgrade = true;
-            print("water");
+            waterGolemController.UpgradeSound();
         }
     }
 
@@ -184,6 +184,7 @@ public class GameManager : MonoBehaviour
         if (EarthGolem == 1)
         {
             earthGolemController.upgrade = true;
+            earthGolemController.UpgradeSound();
         }
     }
 }

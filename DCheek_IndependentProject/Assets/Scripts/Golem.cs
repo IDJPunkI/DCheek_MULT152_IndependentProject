@@ -51,4 +51,9 @@ public class Golem : MonoBehaviour
 
         audioSources[randomNum].Play();
     }
+
+    public void UpgradeSound()
+    {
+        audioSources[3].Play();
+    }
 }

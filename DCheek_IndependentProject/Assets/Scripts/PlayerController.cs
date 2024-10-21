@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 100.0f;
     public bool death = false;
 
+    public Camera mainCam;
+    public Camera deathCam;
+
     private Animator animPlayer;
     private AudioSource[] audioSources;
     private GameManager gameManager;
@@ -118,6 +121,8 @@ public class PlayerController : MonoBehaviour
 
         else
         {
+            mainCam.enabled = false;
+            deathCam.enabled = true;
             animPlayer.SetBool("Jump", false);
             animPlayer.SetBool("Death", true);
             particles.Stop();

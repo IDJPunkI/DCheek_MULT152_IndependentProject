@@ -13,9 +13,8 @@ public class Golem : MonoBehaviour
     private GameManager gameManager;
 
     public Transform player; // Reference to the player
-    public float followDistance = 5.0f; // Distance at which the Golem will follow the player
-    public float stoppingDistance = 2.0f;
-    public float moveSpeed = 2.0f; // Speed of the Golem's movement
+    public float followDistance = 15.0f; // Distance at which the Golem will follow the player
+    public float moveSpeed = 15.0f; // Speed of the Golem's movement
 
     public bool upgrade = false;
 
@@ -59,21 +58,82 @@ public class Golem : MonoBehaviour
 
     private void FollowPlayer()
     {
-        if (player == null) return;
+        if (player == null) return; // Exit if there's no player
 
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, player.position); // Calculate distance to player
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+        float rotationThreshold = 0.1f; // You can adjust this value
+        if (distance > rotationThreshold)
+        {
+            // Calculate the target rotation to face the player
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+            // Smoothly rotate towards the player, only on the Y axis
+            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100f * Time.deltaTime);
+
+            // Preserve the original X and Z rotation
+            newRotation.x = 0; // Maintain X rotation
+            newRotation.z = 0; // Maintain Z rotation
+
+            transform.rotation = newRotation; // Apply the new rotation
+        }
 
         if (distance > followDistance)
         {
-            Vector3 direction = (player.position - transform.position).normalized; // Get direction to the player
-            Vector3 newPosition = transform.position + new Vector3(direction.x, 0, direction.z) * moveSpeed * Time.deltaTime; // Calculate new position
-            newPosition.y = transform.position.y;
-            transform.position = newPosition; // Move the Golem
+            // Use Rigidbody for movement
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                animPlayer.SetFloat("Speed", 5f);
+                Vector3 newPosition = transform.position + new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * moveSpeed * Time.deltaTime;
+                newPosition.y = transform.position.y; // Maintain the same height
+                rb.MovePosition(newPosition); // Move the Golem using Rigidbody
+            }
         }
 
-        else if (distance <= stoppingDistance) 
+        else
         {
-            
+            animPlayer.SetFloat("Speed", 0f);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("FireRune"))
+        {
+            if (CompareTag("FireGolem"))
+            {
+                if (upgrade == false)
+                {
+                    audioSources[3].Play();
+                }
+                upgrade = true;
+            }
+        }
+
+        if (other.CompareTag("WaterRune"))
+        {
+            if (CompareTag("WaterGolem"))
+            {
+                if (upgrade == false)
+                {
+                    audioSources[3].Play();
+                }
+                upgrade = true;
+            }
+        }
+
+        if (other.CompareTag("EarthRune"))
+        {
+            if (CompareTag("EarthGolem"))
+            {
+                if (upgrade == false)
+                {
+                    audioSources[3].Play();
+                }
+                upgrade = true;
+            }
         }
     }
 
@@ -82,11 +142,6 @@ public class Golem : MonoBehaviour
         int randomNum = UnityEngine.Random.Range(1, 3);
 
         audioSources[randomNum].Play();
-    }
-
-    public void UpgradeSound()
-    {
-        audioSources[3].Play();
     }
 
     private void OnDestroy()

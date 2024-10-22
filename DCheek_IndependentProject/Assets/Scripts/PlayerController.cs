@@ -70,15 +70,18 @@ public class PlayerController : MonoBehaviour
                     animPlayer.SetBool("Jump", false);
 
                     // If the Shift key is pressed, increase the speed
-                    if (Input.GetKey(KeyCode.LeftShift))
+                    if (move.magnitude > 0)
                     {
-                        animPlayer.SetFloat("Speed", 10f); // Run
-                        speed = 30;
-                    }
-                    else if (move.magnitude > 0)
-                    {
-                        animPlayer.SetFloat("Speed", 5f); // Walk
-                        speed = 15;
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            animPlayer.SetFloat("Speed", 10f); // Run
+                            speed = 30;
+                        }
+                        else
+                        {
+                            animPlayer.SetFloat("Speed", 5f); // Walk
+                            speed = 15;
+                        }
                     }
                     else
                     {
@@ -153,21 +156,6 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("EarthCrystal") || other.CompareTag("FireCrystal") || other.CompareTag("WaterCrystal"))
         {
             audioSources[1].Play();
-        }
-
-        if (other.CompareTag("FireRune"))
-        {
-            gameManager.FireGolemUpgrade();
-        }
-
-        if (other.CompareTag("WaterRune"))
-        {
-            gameManager.WaterGolemUpgrade();
-        }
-
-        if (other.CompareTag("EarthRune"))
-        {
-            gameManager.EarthGolemUpgrade();
         }
     }
 

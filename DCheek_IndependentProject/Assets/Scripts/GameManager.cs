@@ -164,31 +164,4 @@ public class GameManager : MonoBehaviour
             earthGolemController = earthGolemInstance.GetComponent<Golem>();
         }
     }
-
-    public void FireGolemUpgrade()
-    {
-        if (FireGolem == 1)
-        {
-            fireGolemController.upgrade = true;
-            fireGolemController.UpgradeSound();
-        }
-    }
-
-    public void WaterGolemUpgrade()
-    {
-        if (WaterGolem == 1)
-        {
-            waterGolemController.upgrade = true;
-            waterGolemController.UpgradeSound();
-        }
-    }
-
-    public void EarthGolemUpgrade()
-    {
-        if (EarthGolem == 1)
-        {
-            earthGolemController.upgrade = true;
-            earthGolemController.UpgradeSound();
-        }
-    }
 }

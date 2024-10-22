@@ -32,15 +32,6 @@ public class Crystal : MonoBehaviour
             gameManager.AddCrystal(crystalTag);
             Destroy(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        Destroy(gameObject);
     }
 
     private void OnDestroy()

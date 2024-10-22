@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
 
     private GameObject Player;
     private PlayerController playerController;
+    private Animator animPlayer;
     private Coroutine firingCoroutine;
     private bool isFiring = false;
 
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
     {
         Player = GameObject.FindWithTag("Player");
         playerController = Player.GetComponent<PlayerController>();
+        animPlayer = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,11 +29,11 @@ public class Enemy : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, Player.transform.position) < firingDistance)
         { 
-            if (!isFiring)
+            /*if (!isFiring)
             {
                 firingCoroutine = StartCoroutine(SpawnBullet(Bullet, Random.Range(2.0f, 5.0f)));
                 isFiring = true;
-            }
+            }*/
         }
 
         else

@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 7102136287762146559}
   - component: {fileID: 7102136287762146556}
   - component: {fileID: 8905737020258856105}
+  - component: {fileID: 1098316849351238180}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -161,6 +162,27 @@ MonoBehaviour:
   Bullet: {fileID: 6008596476962366104, guid: 2416409bb5b5aa34a80e3be77db138e1, type: 3}
   bulletSpawnPoint: {fileID: 1331837589601464539}
   firingDistance: 300
+--- !u!95 &1098316849351238180
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7102136287762146558}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a0c20659838f8e147847eda60ff6bdb5, type: 3}
+  m_Controller: {fileID: 9100000, guid: 8e9493a2ed405ae45a352345b5ea8a3a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &407979108814176925
 PrefabInstance:
   m_ObjectHideFlags: 0

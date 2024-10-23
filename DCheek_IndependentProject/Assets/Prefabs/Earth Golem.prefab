@@ -154,7 +154,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  enemies: []
+  enemyObjects: []
+  directionToEnemy: {x: 0, y: 0, z: 0}
+  distanceToEnemy: 0
   followDistance: 15
+  followEnemy: 10
   moveSpeed: 15
   upgrade: 0
 --- !u!82 &5686569210202230180

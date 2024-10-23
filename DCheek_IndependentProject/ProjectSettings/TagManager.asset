@@ -20,6 +20,10 @@ TagManager:
   - FireRune
   - WaterRune
   - EarthRune
+  - EarthBase
+  - FireBase
+  - WaterBase
+  - MageBase
   layers:
   - Default
   - TransparentFX

@@ -154,7 +154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  enemy: {fileID: 0}
   followDistance: 15
+  followEnemy: 10
   moveSpeed: 15
   upgrade: 0
 --- !u!82 &6780233180522185594

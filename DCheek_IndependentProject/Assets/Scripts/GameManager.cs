@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject FireGolemObject;
     public GameObject WaterGolemObject;
     public GameObject EarthGolemObject;
+    public GameObject EnemyObject;
 
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     public int WaterGolem = 0;
     public int EarthGolem = 0;
     public int golemCount = 0;
+    public int enemyCount = 0;
 
     private bool[] Golems = new bool[3];
 
@@ -162,6 +164,15 @@ public class GameManager : MonoBehaviour
             EarthCrystal -= 6;
             EarthGolem++;
             earthGolemController = earthGolemInstance.GetComponent<Golem>();
+        }
+    }
+
+    public void EarthBase()
+    {
+        if (enemyCount == 0)
+        {
+            Instantiate(EnemyObject, new Vector3(674.82f, 214.057f, -236.55f), Quaternion.Euler(0f, -70.888f, 0f));
+            enemyCount++;
         }
     }
 }

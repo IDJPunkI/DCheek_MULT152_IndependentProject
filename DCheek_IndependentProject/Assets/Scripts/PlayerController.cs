@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private float rotationX = 0;
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
+    private bool isWithinEarthBase = false;
+
 
     void Start()
     {
@@ -120,6 +122,11 @@ public class PlayerController : MonoBehaviour
                     gameManager.EarthGolemCreation();
                 }
             }
+
+            if (isWithinEarthBase)
+            {
+                gameManager.EarthBase();
+            }
         }
 
         else
@@ -137,6 +144,11 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("HomeBase"))
         {
             isWithinHomeBase = true;
+        }
+
+        if (other.CompareTag("EarthBase"))
+        {
+            isWithinEarthBase = true;
         }
 
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
@@ -164,6 +176,11 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("HomeBase"))
         {
             isWithinHomeBase = false;
+        }
+
+        if (other.CompareTag("EarthBase"))
+        {
+            isWithinEarthBase = false;
         }
     }
 

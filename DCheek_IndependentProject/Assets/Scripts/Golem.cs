@@ -11,26 +11,24 @@ public class Golem : MonoBehaviour
     private FireLightScript fireLight;
     private FireConstantBaseScript fireConstant;
     private GameManager gameManager;
+    private Coroutine attackCoroutine;
+    private GameObject enemyObject;
 
     public Transform player; // Reference to the player
-    public Transform[] enemies;
-    public GameObject[] enemyObjects;
+    public Transform enemy;
     public Vector3 directionToEnemy;
-    public float distanceToEnemy = 0.0f;
+    public float health = 25.0f;
     public float followDistance = 15.0f; // Distance at which the Golem will follow the player
     public float followEnemy = 10.0f;
     public float moveSpeed = 15.0f; // Speed of the Golem's movement
-
     public bool upgrade = false;
+    public bool attacking = false;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         player = GameObject.FindWithTag("Player").transform;
-
-        enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
-
         upgrade = false;
         audioSources = GetComponents<AudioSource>();
         particles = GetComponentInChildren<ParticleSystem>();
@@ -42,50 +40,77 @@ public class Golem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemies = new Transform[enemyObjects.Length];
-        Transform closestEnemy = null; // To keep track of the closest enemy
-        float closestDistance = Mathf.Infinity; // Initialize to a large value
-
-        for (int i = 0; i < enemyObjects.Length; i++)
+        if (health <= 0)
         {
-            enemies[i] = enemyObjects[i].transform;
-            distanceToEnemy = Vector3.Distance(transform.position, enemies[i].position);
-
-            // Check if this enemy is the closest one
-            if (distanceToEnemy < closestDistance)
+            animPlayer.SetBool("Death", true);
+            if (CompareTag("FireGolem"))
             {
-                closestDistance = distanceToEnemy;
-                closestEnemy = enemies[i]; // Update the closest enemy reference
+                gameManager.FireGolem = 0;
             }
-        }
+            if (CompareTag("WaterGolem"))
+            {
+                gameManager.WaterGolem = 0;
+            }
+            if (CompareTag("EarthGolem"))
+            {
+                gameManager.EarthGolem = 0;
+            }
 
-        if (closestEnemy != null && closestDistance <= 40.0f) // Check if it's within range
-        {
-            Vector3 directionToEnemy = (closestEnemy.position - transform.position).normalized; // Calculate direction
-            FollowEnemy(closestEnemy, directionToEnemy); // Pass direction to FollowEnemy
+            if (upgrade == true)
+            {
+                if (CompareTag("FireGolem"))
+                {
+                    fireLight = GetComponentInChildren<FireLightScript>();
+                    fireConstant = GetComponentInChildren<FireConstantBaseScript>();
+                    fireLight.enabled = false;
+                    fireConstant.enabled = false;
+                }
+
+                else
+                {
+                    if (particles.isPlaying == true)
+                    {
+                        particles.Stop();
+                    }
+                }
+            }
+
+            StartCoroutine(DestroySelf());
         }
 
         else
         {
-            FollowPlayer();
-        }
-        
 
-        if (upgrade == true)
-        {
-            if (CompareTag("FireGolem"))
+            enemyObject = GameObject.FindWithTag("Enemy");
+
+            if (enemyObject != null)
             {
-                fireLight = GetComponentInChildren<FireLightScript>();
-                fireConstant = GetComponentInChildren<FireConstantBaseScript>();
-                fireLight.enabled = true;
-                fireConstant.enabled = true;
+                enemy = enemyObject.transform;
+                FollowEnemy();
             }
+
 
             else
             {
-                if (particles.isPlaying == false)
+                FollowPlayer();
+            }
+
+            if (upgrade == true)
+            {
+                if (CompareTag("FireGolem"))
                 {
-                    particles.Play();
+                    fireLight = GetComponentInChildren<FireLightScript>();
+                    fireConstant = GetComponentInChildren<FireConstantBaseScript>();
+                    fireLight.enabled = true;
+                    fireConstant.enabled = true;
+                }
+
+                else
+                {
+                    if (particles.isPlaying == false)
+                    {
+                        particles.Play();
+                    }
                 }
             }
         }
@@ -94,6 +119,10 @@ public class Golem : MonoBehaviour
     private void FollowPlayer()
     {
         if (player == null) return; // Exit if there's no player
+
+        attackCoroutine = null;
+        animPlayer.SetBool("Fight_1", false);
+        animPlayer.SetBool("Fight_2", false);
 
         float distance = Vector3.Distance(transform.position, player.position); // Calculate distance to player
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
@@ -134,12 +163,21 @@ public class Golem : MonoBehaviour
         }
     }
 
-    private void FollowEnemy(Transform enemy, Vector3 directionToEnemy)
+    private void FollowEnemy()
     {
-        if (enemies == null) return; 
+        if (enemy == null)
+        {
+            animPlayer.SetBool("Fight_1", false);
+            animPlayer.SetBool("Fight_2", false);
+            attacking = false;
+            return;
+        }
+        
+        float distance = Vector3.Distance(transform.position, enemy.position); // Calculate distance to player
+        Vector3 directionToEnemy = (enemy.position - transform.position).normalized;
 
         float rotationThreshold = 0.1f; 
-        if (distanceToEnemy > rotationThreshold)
+        if (distance > rotationThreshold)
         {
             Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
 
@@ -151,7 +189,7 @@ public class Golem : MonoBehaviour
             transform.rotation = newRotation; 
         }
 
-        if (distanceToEnemy > followEnemy)
+        if (distance > followEnemy)
         {
             // Use Rigidbody for movement
             Rigidbody rb = GetComponent<Rigidbody>();
@@ -166,7 +204,11 @@ public class Golem : MonoBehaviour
 
         else
         {
-            animPlayer.SetBool("Fight", true);
+            if (attackCoroutine == null) 
+            {
+                attacking = true;
+                attackCoroutine = StartCoroutine(AttackAnimation());
+            }
         }
     }
 
@@ -207,6 +249,11 @@ public class Golem : MonoBehaviour
                 upgrade = true;
             }
         }
+
+        if (other.CompareTag("Lake"))
+        {
+            health -= 25.0f;
+        }
     }
 
     void Growl()
@@ -214,6 +261,32 @@ public class Golem : MonoBehaviour
         int randomNum = UnityEngine.Random.Range(1, 3);
 
         audioSources[randomNum].Play();
+    }
+
+    private IEnumerator AttackAnimation()
+    {
+        int randomNum = UnityEngine.Random.Range(1, 3);
+
+        if (randomNum == 1)
+        {
+            animPlayer.SetBool("Fight_1", true);
+            animPlayer.SetBool("Fight_2", false);
+            yield return new WaitForSeconds(3);
+        }
+        else if (randomNum == 2)
+        {
+            animPlayer.SetBool("Fight_2", true);
+            animPlayer.SetBool("Fight_1", false);
+            yield return new WaitForSeconds(2);
+        }
+
+        attackCoroutine = null;
+    }
+
+    private IEnumerator DestroySelf()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
     private void OnDestroy()

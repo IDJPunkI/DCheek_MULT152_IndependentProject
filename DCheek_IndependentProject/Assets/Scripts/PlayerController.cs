@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
     private bool isWithinEarthBase = false;
+    private bool deathSound = false;
 
 
     void Start()
@@ -136,6 +137,14 @@ public class PlayerController : MonoBehaviour
             animPlayer.SetBool("Jump", false);
             animPlayer.SetBool("Death", true);
             particles.Stop();
+
+            if (!deathSound)
+            {
+                audioSources[0].Play();
+                deathSound = true;
+            }
+
+            StartCoroutine(Restart(2.0f));
         }
     }
 
@@ -161,8 +170,6 @@ public class PlayerController : MonoBehaviour
             {
                 staff.enabled = false;
             }*/
-            audioSources[0].Play();
-            StartCoroutine(Restart(2.0f));
         }
 
         if (other.CompareTag("EarthCrystal") || other.CompareTag("FireCrystal") || other.CompareTag("WaterCrystal"))

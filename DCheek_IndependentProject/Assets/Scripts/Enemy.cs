@@ -11,9 +11,17 @@ public class Enemy : MonoBehaviour
     public float firingDistance = 300f;
 
     public Transform playerTransform;
+    public Transform golem;
     public float followDistance = 7.0f;
+    public float followGolem = 12.0f;
     public float moveSpeed = 25.0f;
+    public float health = 5.0f;
 
+    private string[] tags = { "FireGolem", "WaterGolem", "EarthGolem" };
+    private GameManager gameManager;
+    private Golem golemScript;
+    private GameObject[] golems;
+    private SphereCollider[] sphereColliders;
     private GameObject Player;
     private PlayerController playerController;
     private Animator animPlayer;
@@ -23,17 +31,42 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         Player = GameObject.FindWithTag("Player");
         playerTransform = GameObject.FindWithTag("Player").transform;
         playerController = Player.GetComponent<PlayerController>();
         animPlayer = GetComponent<Animator>();
-        animPlayer.Rebind();
     }
 
     // Update is called once per frame
     void Update()
     {
-        FollowPlayer();
+        if (health <= 0)
+        {
+            animPlayer.SetBool("Death", true);
+            StartCoroutine(DestroySelf());
+        }
+
+        foreach (string tag in tags)
+        {
+            golems = GameObject.FindGameObjectsWithTag(tag);
+            if (golems.Length > 0)
+            {
+                golem = golems[0].transform; // Get the first golem found with this tag
+                golemScript = golem.GetComponent<Golem>();
+                sphereColliders = golem.GetComponentsInChildren<SphereCollider>();
+                break; // Exit the loop once you find one
+            }
+        }
+
+        if (golem != null)
+        {
+            FollowGolem();
+        }
+        else
+        {
+            FollowPlayer();
+        }
 
         if (animPlayer == null)
         {
@@ -79,7 +112,7 @@ public class Enemy : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
             // Smoothly rotate towards the player, only on the Y axis
-            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100f * Time.deltaTime);
+            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
 
             // Preserve the original X and Z rotation
             newRotation.x = 0; // Maintain X rotation
@@ -107,6 +140,71 @@ public class Enemy : MonoBehaviour
         {
             animPlayer.SetBool("Fight", true);
         }
+    }
+
+    private void FollowGolem()
+    {
+        if (golem == null) return;
+
+        float distance = Vector3.Distance(transform.position, golem.position); // Calculate distance to player
+        Vector3 directionToGolem = (golem.position - transform.position).normalized;
+
+        float rotationThreshold = 0.1f;
+        if (distance > rotationThreshold)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(directionToGolem);
+
+            Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100f * Time.deltaTime);
+
+            newRotation.x = 0;
+            newRotation.z = 0;
+
+            transform.rotation = newRotation;
+        }
+
+        if (distance > followGolem)
+        {
+            // Use Rigidbody for movement
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                animPlayer.SetFloat("Speed", 5f);
+                Vector3 newPosition = transform.position + new Vector3(directionToGolem.x, 0, directionToGolem.z) * moveSpeed * Time.deltaTime;
+                newPosition.y = transform.position.y; // Maintain the same height
+                rb.MovePosition(newPosition); // Move the Golem using Rigidbody
+            }
+        }
+
+        else
+        {
+            animPlayer.SetBool("Fight", true);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (golem != null && golemScript.attacking)
+        { 
+            foreach (var collider in sphereColliders)
+            {
+                if (other == collider) // Check if the collider matches
+                {
+                    health -= 2;
+                    break; // Exit the loop once a match is found
+                }
+            }
+        }
+    }
+
+    private IEnumerator DestroySelf()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        gameManager.enemyCount--;
     }
 
     private IEnumerator SpawnBullet(GameObject bullet, float delay)

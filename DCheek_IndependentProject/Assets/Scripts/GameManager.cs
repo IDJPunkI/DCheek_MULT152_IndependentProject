@@ -169,15 +169,12 @@ public class GameManager : MonoBehaviour
     }
 
     public void EarthBase()
-    {
-        while (earthBaseGoblins < 5)
+    { 
+        if (enemyCount == 0 && earthBaseGoblins < 5)
         {
-            if (enemyCount == 0)
-            {
-                Instantiate(EnemyObject, new Vector3(674.82f, 214.057f, -236.55f), Quaternion.Euler(0f, -70.888f, 0f));
-                enemyCount++;
-                earthBaseGoblins++;
-            }
+            Instantiate(EnemyObject, new Vector3(674.82f, 214.057f, -236.55f), Quaternion.Euler(0f, -70.888f, 0f));
+            enemyCount++;
+            earthBaseGoblins++;
         }
     }
 }

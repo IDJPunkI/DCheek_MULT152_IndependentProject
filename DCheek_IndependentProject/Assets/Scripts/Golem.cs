@@ -195,6 +195,9 @@ public class Golem : MonoBehaviour
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
             {
+                attackCoroutine = null;
+                animPlayer.SetBool("Fight_1", false);
+                animPlayer.SetBool("Fight_2", false);
                 animPlayer.SetFloat("Speed", 5f);
                 Vector3 newPosition = transform.position + new Vector3(directionToEnemy.x, 0, directionToEnemy.z) * moveSpeed * Time.deltaTime;
                 newPosition.y = transform.position.y; // Maintain the same height

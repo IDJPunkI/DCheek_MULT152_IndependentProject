@@ -20,6 +20,6 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Vector3 seekDirection = (player.transform.position - transform.position).normalized;
-        enemyRB.AddForce((player.transform.position - transform.position).normalized * speed * Time.deltaTime);
+        enemyRB.AddForce(seekDirection * speed * Time.deltaTime);
     }
 }

@@ -12,17 +12,28 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 100.0f;
     public bool death = false;
 
+    public Camera mainCam;
+    public Camera deathCam;
+
+    private Animator animPlayer;
     private AudioSource[] audioSources;
     private GameManager gameManager;
     private CharacterController controller;
+    private ParticleSystem particles;
     private float rotationX = 0;
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
+    private bool isWithinEarthBase = false;
+    private bool deathSound = false;
+
 
     void Start()
     {
         GameObject gameManagerObject = GameObject.Find("Game Manager");
+
+        animPlayer = GetComponent<Animator>();
         audioSources = GetComponents<AudioSource>();
+        particles = GetComponentInChildren<ParticleSystem>();
 
         if (gameManagerObject != null)
         {
@@ -43,30 +54,51 @@ public class PlayerController : MonoBehaviour
             Vector3 move = new Vector3(moveDirectionX, 0, moveDirectionZ);
             move = transform.TransformDirection(move);
 
-            // If the Shift key is pressed, increase the speed
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                speed = 30;
-            }
-            else
-            {
-                speed = 15;
-            }
-
             velocity.x = move.x * speed;
             velocity.z = move.z * speed;
+
 
             // Apply gravity
             if (controller.isGrounded)
             {
                 if (Input.GetButtonDown("Jump")) // Optional: Add jumping
                 {
+                    animPlayer.SetBool("Jump", true);
                     velocity.y = jumpForce;
+                    speed = 15;
                 }
+
+                else 
+                {
+                    animPlayer.SetBool("Jump", false);
+
+                    // If the Shift key is pressed, increase the speed
+                    if (move.magnitude > 0)
+                    {
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            animPlayer.SetFloat("Speed", 10f); // Run
+                            speed = 30;
+                        }
+                        else
+                        {
+                            animPlayer.SetFloat("Speed", 5f); // Walk
+                            speed = 15;
+                        }
+                    }
+                    else
+                    {
+                        animPlayer.SetFloat("Speed", 0f); // Idle
+                        speed = 15;
+                    }
+                }
+
             }
             else
             {
+                //animPlayer.SetBool("Jump", true);
                 velocity.y += gravity * Time.deltaTime;
+                speed = 15;
             }
 
             controller.Move(velocity * Time.deltaTime);
@@ -91,6 +123,28 @@ public class PlayerController : MonoBehaviour
                     gameManager.EarthGolemCreation();
                 }
             }
+
+            if (isWithinEarthBase)
+            {
+                gameManager.EarthBase();
+            }
+        }
+
+        else
+        {
+            mainCam.enabled = false;
+            deathCam.enabled = true;
+            animPlayer.SetBool("Jump", false);
+            animPlayer.SetBool("Death", true);
+            particles.Stop();
+
+            if (!deathSound)
+            {
+                audioSources[0].Play();
+                deathSound = true;
+            }
+
+            StartCoroutine(Restart(2.0f));
         }
     }
 
@@ -100,18 +154,22 @@ public class PlayerController : MonoBehaviour
         {
             isWithinHomeBase = true;
         }
+
+        if (other.CompareTag("EarthBase"))
+        {
+            isWithinEarthBase = true;
+        }
+
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
         {
             death = true;
-            SkinnedMeshRenderer renderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            /*SkinnedMeshRenderer renderer = GetComponentInChildren<SkinnedMeshRenderer>();
             MeshRenderer staff = GetComponentInChildren<MeshRenderer>();
             renderer.enabled = false;
             if (staff.CompareTag("Staff"))
             {
                 staff.enabled = false;
-            }
-            audioSources[0].Play();
-            StartCoroutine(Restart(2.0f));
+            }*/
         }
 
         if (other.CompareTag("EarthCrystal") || other.CompareTag("FireCrystal") || other.CompareTag("WaterCrystal"))
@@ -125,6 +183,11 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("HomeBase"))
         {
             isWithinHomeBase = false;
+        }
+
+        if (other.CompareTag("EarthBase"))
+        {
+            isWithinEarthBase = false;
         }
     }
 

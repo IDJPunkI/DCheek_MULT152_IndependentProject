@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject FireGolemObject;
     public GameObject WaterGolemObject;
     public GameObject EarthGolemObject;
+    public GameObject EnemyObject;
 
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
@@ -21,8 +22,15 @@ public class GameManager : MonoBehaviour
     public int FireGolem = 0;
     public int WaterGolem = 0;
     public int EarthGolem = 0;
+    public int golemCount = 0;
+    public int enemyCount = 0;
+    public int earthBaseGoblins = 0;
 
     private bool[] Golems = new bool[3];
+
+    private Golem fireGolemController;
+    private Golem waterGolemController;
+    private Golem earthGolemController;
 
     // Start is called before the first frame update
     void Start()
@@ -113,9 +121,9 @@ public class GameManager : MonoBehaviour
 
     public void Reset()
     {
-        FireCrystal = 0;
-        WaterCrystal = 0;
-        EarthCrystal = 0;
+        FireCrystal = 6;
+        WaterCrystal = 6;
+        EarthCrystal = 6;
         FireGolem = 0;
         WaterGolem = 0;
         EarthGolem = 0;
@@ -126,31 +134,47 @@ public class GameManager : MonoBehaviour
 
     public void FireGolemCreation()
     {
-        if ((Golems[0] == true) & (FireGolem == 0))
+        if ((golemCount == 0) & (Golems[0] == true) & (FireGolem == 0))
         {
-            Instantiate(FireGolemObject, new Vector3(329.45f, 211.0513f, 100.7f), Quaternion.Euler(0f, -37.322f, 0f));
+            GameObject fireGolemInstance = Instantiate(FireGolemObject, new Vector3(329.45f, 211.0513f, 100.7f), Quaternion.Euler(0f, -37.322f, 0f));
+            golemCount++;
             FireCrystal -= 6;
             FireGolem++;
+            fireGolemController = fireGolemInstance.GetComponent<Golem>();
         }
     }
 
     public void WaterGolemCreation()
     {
-        if ((Golems[1] == true) & (WaterGolem == 0))
+        if ((golemCount == 0) & (Golems[1] == true) & (WaterGolem == 0))
         {
-            Instantiate(WaterGolemObject, new Vector3(283.35f, 211.0513f, 96.52f), Quaternion.Euler(0f, 43.495f, 0f));
+            GameObject waterGolemInstance = Instantiate(WaterGolemObject, new Vector3(283.35f, 211.0513f, 96.52f), Quaternion.Euler(0f, 43.495f, 0f));
+            golemCount++;
             WaterCrystal -= 6;
             WaterGolem++;
+            waterGolemController = waterGolemInstance.GetComponent<Golem>();
         }
     }
 
     public void EarthGolemCreation()
     {
-        if ((Golems[2] == true) & (EarthGolem == 0))
+        if ((golemCount == 0) & (Golems[2] == true) & (EarthGolem == 0))
         {
-            Instantiate(EarthGolemObject, new Vector3(280.2f, 211.0513f, 155.5f), Quaternion.Euler(0f, 123.736f, 0f));
+            GameObject earthGolemInstance = Instantiate(EarthGolemObject, new Vector3(280.2f, 211.0513f, 155.5f), Quaternion.Euler(0f, 123.736f, 0f));
+            golemCount++;
             EarthCrystal -= 6;
             EarthGolem++;
+            earthGolemController = earthGolemInstance.GetComponent<Golem>();
+        }
+    }
+
+    public void EarthBase()
+    { 
+        if (enemyCount == 0 && earthBaseGoblins < 5)
+        {
+            Instantiate(EnemyObject, new Vector3(674.82f, 214.057f, -236.55f), Quaternion.Euler(0f, -70.888f, 0f));
+            enemyCount++;
+            earthBaseGoblins++;
         }
     }
 }

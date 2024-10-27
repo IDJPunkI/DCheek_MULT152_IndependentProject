@@ -24,6 +24,9 @@ TagManager:
   - FireBase
   - WaterBase
   - MageBase
+  - FireAttack
+  - WaterAttack
+  - EarthAttack
   layers:
   - Default
   - TransparentFX

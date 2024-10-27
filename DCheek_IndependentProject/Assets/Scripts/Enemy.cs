@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     public float health = 5.0f;
 
     private string[] tags = { "FireGolem", "WaterGolem", "EarthGolem" };
+    private AudioSource[] audioSources;
     private GameManager gameManager;
     private Golem golemScript;
     private GameObject[] golems;
@@ -27,15 +28,28 @@ public class Enemy : MonoBehaviour
     private Animator animPlayer;
     private Coroutine firingCoroutine;
     private bool isFiring = false;
+    private bool deathSound = false;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        audioSources = GetComponents<AudioSource>();
         Player = GameObject.FindWithTag("Player");
         playerTransform = GameObject.FindWithTag("Player").transform;
         playerController = Player.GetComponent<PlayerController>();
         animPlayer = GetComponent<Animator>();
+
+        if (gameManager.earthBaseGoblins == 2)
+        {
+            health += 2.5f;
+        }
+        else if (gameManager.earthBaseGoblins == 3)
+        {
+            health += 5f;
+        }
+
+        audioSources[0].Play();
     }
 
     // Update is called once per frame
@@ -44,6 +58,11 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             animPlayer.SetBool("Death", true);
+            if (!deathSound)
+            {
+                audioSources[1].Play();
+                deathSound = true;
+            }
             StartCoroutine(DestroySelf());
         }
 
@@ -57,15 +76,6 @@ public class Enemy : MonoBehaviour
                 sphereColliders = golem.GetComponentsInChildren<SphereCollider>();
                 break; // Exit the loop once you find one
             }
-        }
-
-        if (golem != null)
-        {
-            FollowGolem();
-        }
-        else
-        {
-            FollowPlayer();
         }
 
         if (animPlayer == null)
@@ -95,6 +105,18 @@ public class Enemy : MonoBehaviour
         {
             StopCoroutine(firingCoroutine);
             isFiring = true;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (golem != null)
+        {
+            FollowGolem();
+        }
+        else
+        {
+            FollowPlayer();
         }
     }
 

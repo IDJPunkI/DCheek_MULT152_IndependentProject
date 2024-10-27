@@ -167,14 +167,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d4086abcd45c04ab2ceb68f6ae65bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bigAttack: {fileID: 7791607975242654719, guid: 07f4890c34b14c44a898c80b8512ca8f, type: 3}
   player: {fileID: 0}
   enemy: {fileID: 0}
+  enemyBaseT: {fileID: 0}
   directionToEnemy: {x: 0, y: 0, z: 0}
-  health: 25
+  upgradedAttackCount: 0
+  health: 20
   followDistance: 15
   followEnemy: 10
   moveSpeed: 15
   upgrade: 0
+  attacking: 0
 --- !u!82 &5686569210202230180
 AudioSource:
   m_ObjectHideFlags: 0

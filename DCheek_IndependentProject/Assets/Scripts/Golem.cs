@@ -2,6 +2,7 @@ using DigitalRuby.PyroParticles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Golem : MonoBehaviour
 {
@@ -13,11 +14,16 @@ public class Golem : MonoBehaviour
     private GameManager gameManager;
     private Coroutine attackCoroutine;
     private GameObject enemyObject;
+    private GameObject baseBox;
+    private GameObject enemyBase;
 
+    public GameObject bigAttack;
     public Transform player; // Reference to the player
     public Transform enemy;
+    public Transform enemyBaseT;
     public Vector3 directionToEnemy;
-    public float health = 25.0f;
+    public int upgradedAttackCount = 0;
+    public float health = 20.0f;
     public float followDistance = 15.0f; // Distance at which the Golem will follow the player
     public float followEnemy = 10.0f;
     public float moveSpeed = 15.0f; // Speed of the Golem's movement
@@ -29,7 +35,23 @@ public class Golem : MonoBehaviour
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         player = GameObject.FindWithTag("Player").transform;
+        if (CompareTag("FireGolem"))
+        {
+            baseBox = GameObject.Find("Fire Box");
+            enemyBase = GameObject.Find("Fire Base");
+        }
+        else if (CompareTag("WaterGolem"))
+        {
+            baseBox = GameObject.Find("Water Box");
+            enemyBase = GameObject.Find("Water Base");
+        }
+        else if (CompareTag("EarthGolem"))
+        {
+            baseBox = GameObject.Find("Earth Box");
+            enemyBase = GameObject.Find("Earth Base");
+        }
         upgrade = false;
+        enemyBaseT = enemyBase.transform;
         audioSources = GetComponents<AudioSource>();
         particles = GetComponentInChildren<ParticleSystem>();
         animPlayer = GetComponent<Animator>();
@@ -77,26 +99,18 @@ public class Golem : MonoBehaviour
 
             StartCoroutine(DestroySelf());
         }
-
         else
         {
-
             enemyObject = GameObject.FindWithTag("Enemy");
-
-            if (enemyObject != null)
-            {
-                enemy = enemyObject.transform;
-                FollowEnemy();
-            }
-
-
-            else
-            {
-                FollowPlayer();
-            }
 
             if (upgrade == true)
             {
+                if (CompareTag("EarthGolem") && gameManager.earthDestructible == true && upgradedAttackCount < 1)
+                {
+                    upgradedAttackCount++;
+                    Instantiate(bigAttack, new Vector3(transform.position.x + 2f, transform.position.y + 20.7f, transform.position.z - 1.3f), Quaternion.Euler(0f, 0f, 0f));
+                }
+
                 if (CompareTag("FireGolem"))
                 {
                     fireLight = GetComponentInChildren<FireLightScript>();
@@ -112,6 +126,23 @@ public class Golem : MonoBehaviour
                         particles.Play();
                     }
                 }
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (health > 0)
+        {
+            if (enemyObject != null)
+            {
+                enemy = enemyObject.transform;
+                FollowEnemy();
+            }
+
+            else
+            {
+                FollowPlayer();
             }
         }
     }
@@ -223,6 +254,7 @@ public class Golem : MonoBehaviour
             {
                 if (upgrade == false)
                 {
+                    health *= 2;
                     audioSources[3].Play();
                 }
                 upgrade = true;
@@ -235,6 +267,7 @@ public class Golem : MonoBehaviour
             {
                 if (upgrade == false)
                 {
+                    health *= 2;
                     audioSources[3].Play();
                 }
                 upgrade = true;
@@ -247,6 +280,7 @@ public class Golem : MonoBehaviour
             {
                 if (upgrade == false)
                 {
+                    health *= 2;
                     audioSources[3].Play();
                 }
                 upgrade = true;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameMusic : MonoBehaviour
 {
     private PlayerController playerController;
-    private AudioSource audioSource;
+    private AudioSource[] audioSources;
 
     public GameObject playerObject;
 
@@ -13,7 +13,7 @@ public class GameMusic : MonoBehaviour
     void Start()
     {
         playerController = playerObject.GetComponent<PlayerController>();
-        audioSource = GetComponent<AudioSource>();
+        audioSources = GetComponents<AudioSource>();
     }
 
     // Update is called once per frame
@@ -21,7 +21,12 @@ public class GameMusic : MonoBehaviour
     {
         if (playerController.death == true)
         {
-            audioSource.Stop();
+            audioSources[0].Stop();
         }
+    }
+
+    public void BaseDestroyed()
+    {
+        audioSources[1].Play();
     }
 }

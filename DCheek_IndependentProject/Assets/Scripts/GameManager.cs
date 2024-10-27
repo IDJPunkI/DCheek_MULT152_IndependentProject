@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public int golemCount = 0;
     public int enemyCount = 0;
     public int earthBaseGoblins = 0;
+    public bool earthDestructible = false;
 
     private bool[] Golems = new bool[3];
 
@@ -170,11 +171,15 @@ public class GameManager : MonoBehaviour
 
     public void EarthBase()
     { 
-        if (enemyCount == 0 && earthBaseGoblins < 5)
+        if (enemyCount == 0 && earthBaseGoblins < 3)
         {
             Instantiate(EnemyObject, new Vector3(674.82f, 214.057f, -236.55f), Quaternion.Euler(0f, -70.888f, 0f));
             enemyCount++;
             earthBaseGoblins++;
+        }
+        else if (enemyCount == 0 && earthBaseGoblins == 3)
+        {
+            earthDestructible = true;
         }
     }
 }

@@ -40,11 +40,11 @@ public class Enemy : MonoBehaviour
         playerController = Player.GetComponent<PlayerController>();
         animPlayer = GetComponent<Animator>();
 
-        if (gameManager.earthBaseGoblins == 2)
+        if (gameManager.earthBaseGoblins == 3)
         {
             health += 2.5f;
         }
-        else if (gameManager.earthBaseGoblins == 3)
+        else if (gameManager.earthBaseGoblins == 4)
         {
             health += 5f;
         }

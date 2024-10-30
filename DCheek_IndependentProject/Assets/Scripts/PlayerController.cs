@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
     private bool isWithinEarthBase = false;
+    private bool isWithinFireBase = false;
+    private bool isWithinWaterBase = false;
     private bool deathSound = false;
 
 
@@ -128,6 +130,16 @@ public class PlayerController : MonoBehaviour
             {
                 gameManager.EarthBase();
             }
+
+            if (isWithinFireBase)
+            {
+                gameManager.FireBase();
+            }
+
+            if (isWithinWaterBase)
+            {
+                gameManager.WaterBase();
+            }
         }
 
         else
@@ -160,6 +172,16 @@ public class PlayerController : MonoBehaviour
             isWithinEarthBase = true;
         }
 
+        if (other.CompareTag("FireBase"))
+        {
+            isWithinFireBase = true;
+        }
+
+        if (other.CompareTag("WaterBase"))
+        {
+            isWithinWaterBase = true;
+        }
+
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
         {
             death = true;
@@ -188,6 +210,16 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("EarthBase"))
         {
             isWithinEarthBase = false;
+        }
+
+        if (other.CompareTag("FireBase"))
+        {
+            isWithinFireBase = false;
+        }
+
+        if (other.CompareTag("WaterBase"))
+        {
+            isWithinFireBase = false;
         }
     }
 

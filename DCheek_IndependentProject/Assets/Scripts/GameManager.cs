@@ -25,7 +25,11 @@ public class GameManager : MonoBehaviour
     public int golemCount = 0;
     public int enemyCount = 0;
     public int earthBaseGoblins = 0;
+    public int fireBaseGoblins = 0;
+    public int waterBaseGoblins = 0;
     public bool earthDestructible = false;
+    public bool fireDestructible = false;
+    public bool waterDestructible = false;
 
     private bool[] Golems = new bool[3];
 
@@ -171,15 +175,81 @@ public class GameManager : MonoBehaviour
 
     public void EarthBase()
     { 
-        if (enemyCount == 0 && earthBaseGoblins < 3)
+        if (enemyCount == 0 && earthBaseGoblins < 4)
         {
+            earthBaseGoblins++;
             Instantiate(EnemyObject, new Vector3(674.82f, 214.057f, -236.55f), Quaternion.Euler(0f, -70.888f, 0f));
             enemyCount++;
-            earthBaseGoblins++;
         }
-        else if (enemyCount == 0 && earthBaseGoblins == 3)
+        else if (enemyCount == 0 && earthBaseGoblins == 4)
         {
             earthDestructible = true;
+        }
+    }
+
+    public void FireBase()
+    {
+        if (enemyCount == 0 && fireBaseGoblins < 1)
+        {
+            fireBaseGoblins++;
+            Instantiate(EnemyObject, new Vector3(-226.23f, 214.057f, -305.97f), Quaternion.Euler(0f, 61.07f, 0f));
+            enemyCount++;
+        }
+        else if (enemyCount == 0 && fireBaseGoblins >= 1)
+        {
+            for (int i = 0; i <= 1; i++)
+            {
+                fireBaseGoblins++;
+                if (i ==0)
+                {
+                    Instantiate(EnemyObject, new Vector3(-225.32f, 214.057f, -310.48f), Quaternion.Euler(0f, 47.741f, 0f));
+                }
+                else
+                {
+                    Instantiate(EnemyObject, new Vector3(-229.77f, 214.057f, -302.06f), Quaternion.Euler(0f, 75.43f, 0f));
+                }
+                enemyCount++;
+            }
+          
+        }
+        else if (enemyCount == 0 && fireBaseGoblins == 5)
+        {
+            fireDestructible = true;
+        }
+    }
+
+    public void WaterBase()
+    {
+        if (enemyCount == 0 && waterBaseGoblins < 2)
+        {
+            waterBaseGoblins++;
+            Instantiate(EnemyObject, new Vector3(700.19f, 214.057f, 401.82f), Quaternion.Euler(0f, -88.447f, 0f));
+            enemyCount++;
+        }
+        else if (enemyCount == 0 && waterBaseGoblins >= 2)
+        {
+            for (int i = 0; i <= 2; i++)
+            {
+                waterBaseGoblins++;
+                if (i == 0)
+                {
+                    Instantiate(EnemyObject, new Vector3(700.19f, 214.057f, 401.82f), Quaternion.Euler(0f, -88.447f, 0f));
+                }
+                else if (i == 1)
+                {
+                    Instantiate(EnemyObject, new Vector3(700.19f, 214.057f, 410.51f), Quaternion.Euler(0f, -106.953f, 0f));
+                }
+                else
+                {
+                    Instantiate(EnemyObject, new Vector3(700.19f, 214.057f, 393.05f), Quaternion.Euler(0f, -70.375f, 0f));
+                }
+                enemyCount++;
+            }
+
+        }
+        else if (enemyCount == 0 && waterBaseGoblins == 5)
+        {
+            waterDestructible = true;
         }
     }
 }

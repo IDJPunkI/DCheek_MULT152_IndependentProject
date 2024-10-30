@@ -177,7 +177,7 @@ MonoBehaviour:
   followDistance: 15
   followEnemy: 10
   moveSpeed: 15
-  upgrade: 0
+  upgrade: 1
   attacking: 0
 --- !u!82 &8308909042271639033
 AudioSource:

@@ -50,7 +50,7 @@ public class Golem : MonoBehaviour
             baseBox = GameObject.Find("Earth Box");
             enemyBase = GameObject.Find("Earth Base");
         }
-        upgrade = false;
+        //upgrade = false;
         enemyBaseT = enemyBase.transform;
         audioSources = GetComponents<AudioSource>();
         particles = GetComponentInChildren<ParticleSystem>();

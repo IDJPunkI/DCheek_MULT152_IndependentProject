@@ -214,6 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4514467084110817160, guid: 2b24e5d0ae534b74d83bf75e482746a0, type: 3}
+  powerUpPrefab: {fileID: 8330497348273921079, guid: dd37e543afb236140b460510efe9a448, type: 3}
 --- !u!4 &661449873
 Transform:
   m_ObjectHideFlags: 0

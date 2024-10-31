@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
             Instantiate(EnemyObject, new Vector3(-226.23f, 214.057f, -305.97f), Quaternion.Euler(0f, 61.07f, 0f));
             enemyCount++;
         }
-        else if (enemyCount == 0 && fireBaseGoblins >= 1)
+        else if (enemyCount == 0 && fireBaseGoblins >= 1  && fireBaseGoblins < 5)
         {
             for (int i = 0; i <= 1; i++)
             {
@@ -226,7 +226,7 @@ public class GameManager : MonoBehaviour
             Instantiate(EnemyObject, new Vector3(700.19f, 214.057f, 401.82f), Quaternion.Euler(0f, -88.447f, 0f));
             enemyCount++;
         }
-        else if (enemyCount == 0 && waterBaseGoblins >= 2)
+        else if (enemyCount == 0 && waterBaseGoblins >= 2 && waterBaseGoblins < 5)
         {
             for (int i = 0; i <= 2; i++)
             {

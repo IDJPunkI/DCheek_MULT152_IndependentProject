@@ -23,7 +23,7 @@ public class Golem : MonoBehaviour
     public Transform enemyBaseT;
     public Vector3 directionToEnemy;
     public int upgradedAttackCount = 0;
-    public float health = 20.0f;
+    public float health = 25.0f;
     public float followDistance = 15.0f; // Distance at which the Golem will follow the player
     public float followEnemy = 10.0f;
     public float moveSpeed = 15.0f; // Speed of the Golem's movement
@@ -50,7 +50,7 @@ public class Golem : MonoBehaviour
             baseBox = GameObject.Find("Earth Box");
             enemyBase = GameObject.Find("Earth Base");
         }
-        //upgrade = false;
+        upgrade = false;
         enemyBaseT = enemyBase.transform;
         audioSources = GetComponents<AudioSource>();
         particles = GetComponentInChildren<ParticleSystem>();
@@ -289,7 +289,7 @@ public class Golem : MonoBehaviour
 
         if (other.CompareTag("Lake"))
         {
-            health -= 25.0f;
+            health -= 100.0f;
         }
     }
 

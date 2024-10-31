@@ -173,11 +173,11 @@ MonoBehaviour:
   enemyBaseT: {fileID: 0}
   directionToEnemy: {x: 0, y: 0, z: 0}
   upgradedAttackCount: 0
-  health: 20
+  health: 25
   followDistance: 15
   followEnemy: 10
   moveSpeed: 15
-  upgrade: 1
+  upgrade: 0
   attacking: 0
 --- !u!82 &8308909042271639033
 AudioSource:

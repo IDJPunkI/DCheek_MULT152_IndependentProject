@@ -108,7 +108,7 @@ public class Golem : MonoBehaviour
                 if (CompareTag("EarthGolem") && gameManager.earthDestructible == true && upgradedAttackCount < 1)
                 {
                     upgradedAttackCount++;
-                    Instantiate(bigAttack, new Vector3(transform.position.x + 2f, transform.position.y + 20.7f, transform.position.z - 1.3f), Quaternion.Euler(0f, 0f, 0f));
+                    Instantiate(bigAttack, new Vector3(transform.position.x + 2f, transform.position.y + 15f, transform.position.z - 1.3f), Quaternion.Euler(0f, 0f, 0f));
                 }
 
                 if (CompareTag("FireGolem"))
@@ -117,6 +117,11 @@ public class Golem : MonoBehaviour
                     fireConstant = GetComponentInChildren<FireConstantBaseScript>();
                     fireLight.enabled = true;
                     fireConstant.enabled = true;
+                    if (gameManager.fireDestructible == true && upgradedAttackCount < 1)
+                    {
+                        upgradedAttackCount++;
+                        Instantiate(bigAttack, new Vector3(transform.position.x, transform.position.y + 15f, transform.position.z + 4.12f), Quaternion.Euler(0f, 0f, 0f));
+                    }
                 }
 
                 else

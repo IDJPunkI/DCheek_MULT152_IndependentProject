@@ -117,7 +117,7 @@ namespace DigitalRuby.PyroParticles
                 {
                     int index = UnityEngine.Random.Range(0, EmissionSounds.Length);
                     AudioClip clip = EmissionSounds[index];
-                    audio.PlayOneShot(clip, scale);
+                    //audio.PlayOneShot(clip, scale);
                 }
             }
         }

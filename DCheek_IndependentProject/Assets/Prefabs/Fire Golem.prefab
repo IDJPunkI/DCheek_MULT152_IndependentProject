@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d4086abcd45c04ab2ceb68f6ae65bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bigAttack: {fileID: 0}
+  bigAttack: {fileID: 164416, guid: 8aeb2c0224fe763499eed3ec0587162b, type: 3}
   player: {fileID: 0}
   enemy: {fileID: 0}
   enemyBaseT: {fileID: 0}

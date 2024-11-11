@@ -8,6 +8,7 @@ public class UpgradeAttack : MonoBehaviour
     private GameMusic destructionSound;
     private GameObject enemyBase;
     private GameObject baseBox;
+    public GameObject explosion;
     public float speed = 20.0f;
 
     //private AudioSource audioSource;
@@ -55,6 +56,14 @@ public class UpgradeAttack : MonoBehaviour
             Destroy(baseBox);
             Destroy(enemyBase);
             Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (explosion != null)
+        {
+            Instantiate(explosion, transform.position, transform.rotation);
         }
     }
 }

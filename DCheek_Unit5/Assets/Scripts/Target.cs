@@ -31,14 +31,14 @@ public class Target : MonoBehaviour
 
     void RandomForce()
     {
-        targetRB.AddForce(Vector3.up * Random.Range(minForce, maxForce), 
+        targetRB.AddForce(Vector3.up * Random.Range(minForce, maxForce),
             ForceMode.Impulse);
     }
 
     void RandomTorque()
     {
-        targetRB.AddTorque(Random.Range(minTorque, maxTorque), 
-            Random.Range(minTorque, maxTorque), 
+        targetRB.AddTorque(Random.Range(minTorque, maxTorque),
+            Random.Range(minTorque, maxTorque),
             Random.Range(minTorque, maxTorque), ForceMode.Impulse);
     }
 
@@ -61,7 +61,7 @@ public class Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
-        if(!gameObject.CompareTag("Hazard"))
+        if (!gameObject.CompareTag("Hazard"))
         {
             gameManager.GameOver();
         }

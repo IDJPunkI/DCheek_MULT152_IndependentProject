@@ -9,22 +9,28 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private const float spawnRate = 2.0f;
+    private float spawnRate = 2.0f;
     public List<GameObject> prefabs;
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
     public Button restartButton;
+    public GameObject titleScreen;
 
     private int score = 0;
-    public bool gameActive = true;
+    public bool gameActive = false;
 
-    // Start is called before the first frame update
-    void Start()
+    public void StartGame(int diff)
     {
+        gameActive = true;
+        score = 0;
+        spawnRate /= diff;
+        Debug.Log("Game spawn rate = " + spawnRate);
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
+        titleScreen.SetActive(false);
     }
+    
 
     public void GameOver()
     {

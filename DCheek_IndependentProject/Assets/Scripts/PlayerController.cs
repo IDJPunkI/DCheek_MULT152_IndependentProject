@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float gravity = -200.0f;
     public float jumpForce = 100.0f;
     public bool death = false;
+    public bool key = false;
 
     public Camera mainCam;
     public Camera deathCam;
@@ -180,6 +181,12 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("WaterBase"))
         {
             isWithinWaterBase = true;
+        }
+
+        if (other.CompareTag("Key"))
+        {
+            gameManager.fireKey = true;
+            Destroy(other.gameObject);
         }
 
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))

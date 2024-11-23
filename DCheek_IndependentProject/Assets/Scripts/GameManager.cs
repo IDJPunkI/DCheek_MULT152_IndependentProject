@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
     public GameObject FireGolemObject;
     public GameObject WaterGolemObject;
     public GameObject EarthGolemObject;
+    //public GameObject EarthRune;
     public GameObject EnemyObject;
+    public GameObject Gate;
+    public GameObject Ice;
+    public GameObject IceOrb;
 
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
@@ -19,6 +23,7 @@ public class GameManager : MonoBehaviour
     public int FireCrystalCurrent = 0;
     public int WaterCrystalCurrent = 0;
     public int EarthCrystalCurrent = 0;
+    public int EarthRuneActive = 0;
     public int FireGolem = 0;
     public int WaterGolem = 0;
     public int EarthGolem = 0;
@@ -30,17 +35,22 @@ public class GameManager : MonoBehaviour
     public bool earthDestructible = false;
     public bool fireDestructible = false;
     public bool waterDestructible = false;
+    public bool fireKey = false;
+    public bool earthRuneActivated = false;
 
     private bool[] Golems = new bool[3];
 
     private Golem fireGolemController;
     private Golem waterGolemController;
     private Golem earthGolemController;
+    private GameMusic sounds;
 
     // Start is called before the first frame update
     void Start()
     {
         Reset();
+
+        sounds = GameObject.Find("Game Music").GetComponent<GameMusic>();
 
         int randomAmount = UnityEngine.Random.Range(12, 50);
         
@@ -67,6 +77,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (fireKey == true && Gate != null)
+        {
+            Destroy(Gate);
+            sounds.GateOpened();
+        }
+
         if (FireCrystal >= 6)
         {
             Golems[0] = true;
@@ -108,6 +124,10 @@ public class GameManager : MonoBehaviour
         else if (crystalType == "EarthCrystal")
         {
             EarthCrystal += 1;
+            if (EarthGolem == 1)
+            {
+                EarthRuneActive += 1;
+            }
         }
         else
         {
@@ -158,6 +178,21 @@ public class GameManager : MonoBehaviour
             WaterCrystal -= 6;
             WaterGolem++;
             waterGolemController = waterGolemInstance.GetComponent<Golem>();
+            InvokeRepeating("IceTeleport", 7.5f, 7.5f);
+        }
+    }
+
+    public void IceTeleport()
+    {
+        if (IceOrb != null)
+        {
+            float randomX = UnityEngine.Random.Range(111.9f, 586.5f);
+            float randomZ = UnityEngine.Random.Range(389.1f, 562.6f);
+            IceOrb.transform.position = new Vector3(randomX, 213.28f, randomZ);
+        }
+        else
+        {
+            CancelInvoke("IceTeleport");
         }
     }
 

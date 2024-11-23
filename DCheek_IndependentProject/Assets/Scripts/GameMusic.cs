@@ -29,4 +29,14 @@ public class GameMusic : MonoBehaviour
     {
         audioSources[1].Play();
     }
+
+    public void GateOpened()
+    {
+        audioSources[2].Play();
+    }
+
+    public void EarthRune()
+    {
+        audioSources[3].Play();
+    }
 }

@@ -257,7 +257,7 @@ public class Golem : MonoBehaviour
         {
             if (CompareTag("FireGolem"))
             {
-                if (upgrade == false)
+                if (upgrade == false && gameManager.fireKey == true)
                 {
                     health *= 2;
                     audioSources[3].Play();
@@ -279,9 +279,19 @@ public class Golem : MonoBehaviour
             }
         }
 
+        if (other.CompareTag("IceOrb"))
+        {
+            if (CompareTag("WaterGolem"))
+            {
+                Destroy(other.gameObject);
+                gameManager.Ice.SetActive(true);
+                audioSources[4].Play();
+            }
+        }
+
         if (other.CompareTag("EarthRune"))
         {
-            if (CompareTag("EarthGolem"))
+            if (CompareTag("EarthGolem") && gameManager.earthRuneActivated == true)
             {
                 if (upgrade == false)
                 {

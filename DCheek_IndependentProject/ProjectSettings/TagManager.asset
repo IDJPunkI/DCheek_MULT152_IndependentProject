@@ -27,6 +27,13 @@ TagManager:
   - FireAttack
   - WaterAttack
   - EarthAttack
+  - Key
+  - EarthRune1
+  - EarthRune2
+  - EarthRune3
+  - EarthRune4
+  - EarthRune5
+  - IceOrb
   layers:
   - Default
   - TransparentFX

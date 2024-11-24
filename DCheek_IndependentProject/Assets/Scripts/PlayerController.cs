@@ -24,9 +24,9 @@ public class PlayerController : MonoBehaviour
     private float rotationX = 0;
     private Vector3 velocity;
     private bool isWithinHomeBase = false;
-    private bool isWithinEarthBase = false;
-    private bool isWithinFireBase = false;
-    private bool isWithinWaterBase = false;
+    public bool isWithinEarthBase = false;
+    public bool isWithinFireBase = false;
+    public bool isWithinWaterBase = false;
     private bool deathSound = false;
 
 

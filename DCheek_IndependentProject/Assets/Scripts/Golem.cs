@@ -16,6 +16,7 @@ public class Golem : MonoBehaviour
     private GameObject enemyObject;
     private GameObject baseBox;
     private GameObject enemyBase;
+    private PlayerController playerObject;
 
     public GameObject bigAttack;
     public Transform player; // Reference to the player
@@ -34,6 +35,11 @@ public class Golem : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        GameObject playerObj = GameObject.Find("Player");
+        if (playerObj != null)
+        {
+            playerObject = playerObj.GetComponent<PlayerController>();
+        }
         player = GameObject.FindWithTag("Player").transform;
         if (CompareTag("FireGolem"))
         {
@@ -105,13 +111,13 @@ public class Golem : MonoBehaviour
 
             if (upgrade == true)
             {
-                if (CompareTag("EarthGolem") && gameManager.earthDestructible == true && upgradedAttackCount < 1)
+                if (CompareTag("EarthGolem") && gameManager.earthDestructible == true && upgradedAttackCount < 1 && playerObject.isWithinEarthBase == true)
                 {
                     upgradedAttackCount++;
                     Instantiate(bigAttack, new Vector3(transform.position.x + 2f, transform.position.y + 15f, transform.position.z - 1.3f), Quaternion.Euler(0f, 0f, 0f));
                 }
 
-                if (CompareTag("WaterGolem") && gameManager.waterDestructible == true && upgradedAttackCount < 1)
+                if (CompareTag("WaterGolem") && gameManager.waterDestructible == true && upgradedAttackCount < 1 && playerObject.isWithinWaterBase == true)
                 {
                     upgradedAttackCount++;
                     Instantiate(bigAttack, new Vector3(transform.position.x + 2f, transform.position.y + 15f, transform.position.z - 1.3f), Quaternion.Euler(0f, 0f, 0f));
@@ -123,7 +129,7 @@ public class Golem : MonoBehaviour
                     fireConstant = GetComponentInChildren<FireConstantBaseScript>();
                     fireLight.enabled = true;
                     fireConstant.enabled = true;
-                    if (gameManager.fireDestructible == true && upgradedAttackCount < 1)
+                    if (gameManager.fireDestructible == true && upgradedAttackCount < 1 && playerObject.isWithinFireBase == true)
                     {
                         upgradedAttackCount++;
                         Instantiate(bigAttack, new Vector3(transform.position.x, transform.position.y + 15f, transform.position.z + 4.12f), Quaternion.Euler(0f, 0f, 0f));
@@ -148,7 +154,14 @@ public class Golem : MonoBehaviour
             if (enemyObject != null)
             {
                 enemy = enemyObject.transform;
-                FollowEnemy();
+                if (Vector3.Distance(transform.position, enemy.position) < 500)
+                {
+                    FollowEnemy();
+                }
+                else
+                {
+                    FollowPlayer();
+                }
             }
 
             else
@@ -261,9 +274,9 @@ public class Golem : MonoBehaviour
     {
         if (other.CompareTag("FireRune"))
         {
-            if (CompareTag("FireGolem"))
+            if (CompareTag("FireGolem") && gameManager.fireKey == true)
             {
-                if (upgrade == false && gameManager.fireKey == true)
+                if (upgrade == false)
                 {
                     health *= 2;
                     audioSources[3].Play();

@@ -39,4 +39,28 @@ public class GameMusic : MonoBehaviour
     {
         audioSources[3].Play();
     }
+
+    public void Battle()
+    {
+        if (audioSources[0].isPlaying)
+        {
+            audioSources[0].Pause();
+        }
+        if (!audioSources[4].isPlaying)
+        {
+            audioSources[4].Play();
+        }
+    }
+
+    public void Resume()
+    {
+        if (audioSources[4].isPlaying)
+        {
+            audioSources[4].Stop();
+        }
+        if (!audioSources[0].isPlaying)
+        {
+            audioSources[0].Play();
+        }
+    }
 }

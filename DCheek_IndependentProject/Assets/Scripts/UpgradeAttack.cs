@@ -8,6 +8,7 @@ public class UpgradeAttack : MonoBehaviour
     private GameMusic destructionSound;
     private GameObject enemyBase;
     private GameObject baseBox;
+    private GameMusic sounds;
     public GameObject explosion;
     public float speed = 20.0f;
 
@@ -19,6 +20,7 @@ public class UpgradeAttack : MonoBehaviour
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         destructionSound = GameObject.Find("Game Music").GetComponent<GameMusic>();
+        sounds = GameObject.Find("Game Music").GetComponent<GameMusic>();
 
         if (CompareTag("FireAttack"))
         {
@@ -60,6 +62,7 @@ public class UpgradeAttack : MonoBehaviour
             gameManager.enemyBases -= 1;
             gameManager.earthDestructible = false;
             destructionSound.BaseDestroyed();
+            sounds.Resume();
             Destroy(baseBox);
             Destroy(enemyBase);
             Destroy(gameObject);

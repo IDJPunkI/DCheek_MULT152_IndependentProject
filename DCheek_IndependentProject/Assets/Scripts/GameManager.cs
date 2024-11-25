@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject FireEnemyBase;
     public GameObject WaterEnemyBase;
     public GameObject EarthEnemyBase;
+    public GameObject MageEnemyBase;
 
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
@@ -240,7 +241,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void EarthBase()
-    { 
+    {
+        if (EarthEnemyBase != null)
+        {
+            sounds.Battle();
+        }
         if (enemyCount == 0 && earthBaseGoblins < 4)
         {
             earthBaseGoblins++;
@@ -255,6 +260,10 @@ public class GameManager : MonoBehaviour
 
     public void FireBase()
     {
+        if (FireEnemyBase != null)
+        {
+            sounds.Battle();
+        }
         if (enemyCount == 0 && fireBaseGoblins < 1)
         {
             fireBaseGoblins++;
@@ -286,6 +295,10 @@ public class GameManager : MonoBehaviour
 
     public void WaterBase()
     {
+        if (WaterEnemyBase != null)
+        {
+            sounds.Battle();
+        }
         if (enemyCount == 0 && waterBaseGoblins < 2)
         {
             waterBaseGoblins++;
@@ -321,8 +334,13 @@ public class GameManager : MonoBehaviour
 
     public void MageBase()
     {
+        if (MageEnemyBase != null)
+        {
+            sounds.Battle();
+        }
         if (bigEnemyCount == 0)
         {
+            enemyCount++;
             bigEnemyCount++;
             GameObject bigEnemy = Instantiate(EnemyObject, new Vector3(-126.9599f, 223.04f, 489.8666f), Quaternion.Euler(0f, 115.564f, 0f));
             bigEnemy.transform.localScale = new Vector3(12f, 12f, 12f);

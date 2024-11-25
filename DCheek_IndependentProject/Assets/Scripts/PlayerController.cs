@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
     public Camera mainCam;
     public Camera deathCam;
+    public GameObject bigAttack;
 
     private Animator animPlayer;
     private AudioSource[] audioSources;
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public bool isWithinFireBase = false;
     public bool isWithinWaterBase = false;
     private bool deathSound = false;
-
+    private int attackCount = 0;
 
     void Start()
     {
@@ -181,6 +182,16 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("WaterBase"))
         {
             isWithinWaterBase = true;
+        }
+
+        if (other.CompareTag("MageBase"))
+        {
+            gameManager.MageBase();
+            if (attackCount == 0 && gameManager.enemyBases == 1)
+            {
+                attackCount += 1;
+                Instantiate(bigAttack, new Vector3(transform.position.x + 1.259f, transform.position.y + 8f, transform.position.z - 1.3f), Quaternion.Euler(0f, 0f, 0f));
+            }
         }
 
         if (other.CompareTag("Key"))

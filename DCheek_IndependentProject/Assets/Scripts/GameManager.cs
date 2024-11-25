@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public GameObject Gate;
     public GameObject Ice;
     public GameObject IceOrb;
+    public GameObject FireEnemyBase;
+    public GameObject WaterEnemyBase;
+    public GameObject EarthEnemyBase;
 
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
@@ -29,6 +32,8 @@ public class GameManager : MonoBehaviour
     public int EarthGolem = 0;
     public int golemCount = 0;
     public int enemyCount = 0;
+    public int bigEnemyCount = 0;
+    public int enemyBases = 4;
     public int earthBaseGoblins = 0;
     public int fireBaseGoblins = 0;
     public int waterBaseGoblins = 0;
@@ -77,6 +82,30 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (FireEnemyBase == null)
+        {
+            if (FireGolemObject != null)
+            {
+                fireGolemController.health = 0;
+            }
+        }
+
+        if (WaterEnemyBase == null)
+        {
+            if (WaterGolemObject != null)
+            {
+                waterGolemController.health = 0;
+            }
+        }
+
+        if (EarthEnemyBase == null)
+        {
+            if (EarthGolemObject != null)
+            {
+                earthGolemController.health = 0;
+            }
+        }
+
         if (fireKey == true && Gate != null)
         {
             Destroy(Gate);
@@ -155,11 +184,13 @@ public class GameManager : MonoBehaviour
         Golems[0] = false;
         Golems[1] = false;
         Golems[2] = false;
+        enemyBases = 1;
+        bigEnemyCount = 0;
     }
 
     public void FireGolemCreation()
     {
-        if ((golemCount == 0) & (Golems[0] == true) & (FireGolem == 0))
+        if ((golemCount == 0) & (Golems[0] == true) & (FireGolem == 0) & (FireEnemyBase != null))
         {
             GameObject fireGolemInstance = Instantiate(FireGolemObject, new Vector3(329.45f, 211.0513f, 100.7f), Quaternion.Euler(0f, -37.322f, 0f));
             golemCount++;
@@ -171,7 +202,7 @@ public class GameManager : MonoBehaviour
 
     public void WaterGolemCreation()
     {
-        if ((golemCount == 0) & (Golems[1] == true) & (WaterGolem == 0))
+        if ((golemCount == 0) & (Golems[1] == true) & (WaterGolem == 0) & (WaterEnemyBase != null))
         {
             GameObject waterGolemInstance = Instantiate(WaterGolemObject, new Vector3(283.35f, 211.0513f, 96.52f), Quaternion.Euler(0f, 43.495f, 0f));
             golemCount++;
@@ -198,7 +229,7 @@ public class GameManager : MonoBehaviour
 
     public void EarthGolemCreation()
     {
-        if ((golemCount == 0) & (Golems[2] == true) & (EarthGolem == 0))
+        if ((golemCount == 0) & (Golems[2] == true) & (EarthGolem == 0) & (EarthEnemyBase != null))
         {
             GameObject earthGolemInstance = Instantiate(EarthGolemObject, new Vector3(280.2f, 211.0513f, 155.5f), Quaternion.Euler(0f, 123.736f, 0f));
             golemCount++;
@@ -285,6 +316,16 @@ public class GameManager : MonoBehaviour
         else if (enemyCount == 0 && waterBaseGoblins == 5)
         {
             waterDestructible = true;
+        }
+    }
+
+    public void MageBase()
+    {
+        if (bigEnemyCount == 0)
+        {
+            bigEnemyCount++;
+            GameObject bigEnemy = Instantiate(EnemyObject, new Vector3(-126.9599f, 223.04f, 489.8666f), Quaternion.Euler(0f, 115.564f, 0f));
+            bigEnemy.transform.localScale = new Vector3(12f, 12f, 12f);
         }
     }
 }

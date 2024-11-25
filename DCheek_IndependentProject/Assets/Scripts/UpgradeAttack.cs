@@ -36,6 +36,12 @@ public class UpgradeAttack : MonoBehaviour
             enemyBase = GameObject.Find("Earth Base");
         }
 
+        else if (CompareTag("MageAttack"))
+        {
+            baseBox = GameObject.Find("Mage Box");
+            enemyBase = GameObject.Find("Mage Base");
+        }
+
         direction = ((enemyBase.transform.position + new Vector3 (0, 10f, 0)) - transform.position).normalized;
         //audioSource = GetComponent<AudioSource>();
         //audioSource.Play();
@@ -51,6 +57,7 @@ public class UpgradeAttack : MonoBehaviour
     {
         if (other.gameObject == baseBox)
         {
+            gameManager.enemyBases -= 1;
             gameManager.earthDestructible = false;
             destructionSound.BaseDestroyed();
             Destroy(baseBox);

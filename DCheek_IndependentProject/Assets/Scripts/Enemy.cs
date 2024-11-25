@@ -49,6 +49,17 @@ public class Enemy : MonoBehaviour
             health += 5f;
         }
 
+        if (transform.localScale == new Vector3(12f, 12f, 12f))
+        {
+            moveSpeed = 15f;
+            health = 500f;
+        }
+
+        else
+        {
+            moveSpeed = 25f;
+        }
+
         audioSources[0].Play();
     }
 
@@ -110,13 +121,16 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (golem != null)
+        if (health != 0)
         {
-            FollowGolem();
-        }
-        else
-        {
-            FollowPlayer();
+            if (golem != null)
+            {
+                FollowGolem();
+            }
+            else
+            {
+                FollowPlayer();
+            }
         }
     }
 
@@ -206,7 +220,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (golem != null && golemScript.attacking)
-        { 
+        {
             foreach (var collider in sphereColliders)
             {
                 if (other == collider) // Check if the collider matches
@@ -215,6 +229,11 @@ public class Enemy : MonoBehaviour
                     break; // Exit the loop once a match is found
                 }
             }
+        }
+
+        if (other.CompareTag("MageAttack"))
+        {
+            health = 0;
         }
     }
 

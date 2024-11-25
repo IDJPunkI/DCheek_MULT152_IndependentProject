@@ -176,7 +176,7 @@ MonoBehaviour:
   health: 25
   followDistance: 15
   followEnemy: 10
-  moveSpeed: 15
+  moveSpeed: 20
   upgrade: 0
   attacking: 0
 --- !u!82 &8308909042271639033

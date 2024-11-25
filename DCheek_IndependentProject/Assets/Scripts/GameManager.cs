@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         Golems[0] = false;
         Golems[1] = false;
         Golems[2] = false;
-        enemyBases = 1;
+        enemyBases = 4;
         bigEnemyCount = 0;
     }
 

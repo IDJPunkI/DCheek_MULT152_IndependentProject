@@ -53,11 +53,13 @@ public class Enemy : MonoBehaviour
         {
             moveSpeed = 15f;
             health = 500f;
+            followDistance = 20f;
         }
 
         else
         {
             moveSpeed = 25f;
+            followDistance = 7f;
         }
 
         audioSources[0].Play();
@@ -231,7 +233,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("MageAttack"))
+        if (other.CompareTag("MageAttack") || other.CompareTag("Lake"))
         {
             health = 0;
         }

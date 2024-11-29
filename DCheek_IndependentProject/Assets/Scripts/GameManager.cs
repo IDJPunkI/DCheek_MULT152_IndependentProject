@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +22,14 @@ public class GameManager : MonoBehaviour
     public GameObject WaterEnemyBase;
     public GameObject EarthEnemyBase;
     public GameObject MageEnemyBase;
+    public TextMeshProUGUI fireCrystalText;
+    public TextMeshProUGUI waterCrystalText;
+    public TextMeshProUGUI earthCrystalText;
+    public TextMeshProUGUI enemyBaseText;
+    public GameObject fireIcon;
+    public GameObject waterIcon;
+    public GameObject earthIcon;
+    public GameObject enemyBaseIcon;
 
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
@@ -83,6 +93,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        fireCrystalText.text = "x " + FireCrystal.ToString();
+        waterCrystalText.text = "x " + WaterCrystal.ToString();
+        earthCrystalText.text = "x " + EarthCrystal.ToString();
+        enemyBaseText.text = "x " + enemyBases.ToString();
+
         if (FireEnemyBase == null)
         {
             if (FireGolemObject != null)
@@ -176,9 +191,9 @@ public class GameManager : MonoBehaviour
 
     public void Reset()
     {
-        FireCrystal = 6;
-        WaterCrystal = 6;
-        EarthCrystal = 6;
+        FireCrystal = 0;
+        WaterCrystal = 0;
+        EarthCrystal = 0;
         FireGolem = 0;
         WaterGolem = 0;
         EarthGolem = 0;

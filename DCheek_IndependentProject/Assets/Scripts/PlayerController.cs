@@ -156,6 +156,10 @@ public class PlayerController : MonoBehaviour
             animPlayer.SetBool("Jump", false);
             particles.Stop();
             defeatText.SetActive(true);
+            gameManager.fireIcon.SetActive(false);
+            gameManager.waterIcon.SetActive(false);
+            gameManager.earthIcon.SetActive(false);
+            gameManager.enemyBaseIcon.SetActive(false);
 
             if (!deathSound)
             {

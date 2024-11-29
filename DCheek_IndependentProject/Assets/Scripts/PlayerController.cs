@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Camera mainCam;
     public Camera deathCam;
     public GameObject bigAttack;
+    public GameObject defeatText;
 
     private Animator animPlayer;
     private AudioSource[] audioSources;
@@ -45,6 +47,8 @@ public class PlayerController : MonoBehaviour
         }
 
         controller = GetComponent<CharacterController>();
+
+        defeatText.SetActive(false);
     }
 
     void Update()
@@ -148,9 +152,10 @@ public class PlayerController : MonoBehaviour
         {
             mainCam.enabled = false;
             deathCam.enabled = true;
-            animPlayer.SetBool("Jump", false);
             animPlayer.SetBool("Death", true);
+            animPlayer.SetBool("Jump", false);
             particles.Stop();
+            defeatText.SetActive(true);
 
             if (!deathSound)
             {
@@ -202,6 +207,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("Lake") || other.CompareTag("Enemy") || other.CompareTag("Bullet"))
         {
+            animPlayer.SetBool("Death", true);
             death = true;
             /*SkinnedMeshRenderer renderer = GetComponentInChildren<SkinnedMeshRenderer>();
             MeshRenderer staff = GetComponentInChildren<MeshRenderer>();

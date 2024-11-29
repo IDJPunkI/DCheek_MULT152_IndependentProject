@@ -233,7 +233,12 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("MageAttack") || other.CompareTag("Lake"))
+        if (other.CompareTag("MageAttack"))
+        {
+            health = 0;
+        }
+
+        if (other.CompareTag("Lake") && transform.localScale != new Vector3(12f, 12f, 12f))
         {
             health = 0;
         }

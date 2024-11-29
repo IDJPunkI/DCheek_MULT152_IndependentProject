@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InfoScreen : MonoBehaviour
+public class MenuScreen : MonoBehaviour
 {
     private MenuManager menuManager;
 
@@ -12,8 +12,8 @@ public class InfoScreen : MonoBehaviour
         menuManager = GameObject.Find("Menu Manager").GetComponent<MenuManager>();
     }
 
-    public void LoadInfo()
+    public void LoadMenu()
     {
-        menuManager.infoActive = true;
+        menuManager.infoActive = false;
     }
 }

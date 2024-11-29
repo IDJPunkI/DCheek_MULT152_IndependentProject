@@ -53,121 +53,124 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("Player Position: " + transform.position);
-        if (death == false)
+        if (gameManager.victorious == false)
         {
-            float moveDirectionX = Input.GetAxis("Horizontal");
-            float moveDirectionZ = Input.GetAxis("Vertical");
-
-            Vector3 move = new Vector3(moveDirectionX, 0, moveDirectionZ);
-            move = transform.TransformDirection(move);
-
-            velocity.x = move.x * speed;
-            velocity.z = move.z * speed;
-
-
-            // Apply gravity
-            if (controller.isGrounded)
+            //Debug.Log("Player Position: " + transform.position);
+            if (death == false)
             {
-                if (Input.GetButtonDown("Jump")) // Optional: Add jumping
-                {
-                    animPlayer.SetBool("Jump", true);
-                    velocity.y = jumpForce;
-                    speed = 15;
-                }
+                float moveDirectionX = Input.GetAxis("Horizontal");
+                float moveDirectionZ = Input.GetAxis("Vertical");
 
-                else 
-                {
-                    animPlayer.SetBool("Jump", false);
+                Vector3 move = new Vector3(moveDirectionX, 0, moveDirectionZ);
+                move = transform.TransformDirection(move);
 
-                    // If the Shift key is pressed, increase the speed
-                    if (move.magnitude > 0)
+                velocity.x = move.x * speed;
+                velocity.z = move.z * speed;
+
+
+                // Apply gravity
+                if (controller.isGrounded)
+                {
+                    if (Input.GetButtonDown("Jump")) // Optional: Add jumping
                     {
-                        if (Input.GetKey(KeyCode.LeftShift))
+                        animPlayer.SetBool("Jump", true);
+                        velocity.y = jumpForce;
+                        speed = 15;
+                    }
+
+                    else
+                    {
+                        animPlayer.SetBool("Jump", false);
+
+                        // If the Shift key is pressed, increase the speed
+                        if (move.magnitude > 0)
                         {
-                            animPlayer.SetFloat("Speed", 10f); // Run
-                            speed = 30;
+                            if (Input.GetKey(KeyCode.LeftShift))
+                            {
+                                animPlayer.SetFloat("Speed", 10f); // Run
+                                speed = 30;
+                            }
+                            else
+                            {
+                                animPlayer.SetFloat("Speed", 5f); // Walk
+                                speed = 15;
+                            }
                         }
                         else
                         {
-                            animPlayer.SetFloat("Speed", 5f); // Walk
+                            animPlayer.SetFloat("Speed", 0f); // Idle
                             speed = 15;
                         }
                     }
-                    else
+
+                }
+                else
+                {
+                    //animPlayer.SetBool("Jump", true);
+                    velocity.y += gravity * Time.deltaTime;
+                    speed = 15;
+                }
+
+                controller.Move(velocity * Time.deltaTime);
+
+                float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+
+                transform.Rotate(0, mouseX, 0);
+                rotationX = Mathf.Clamp(rotationX, -verticalRotationLimit, verticalRotationLimit);
+
+                if (isWithinHomeBase) // Assuming you set this boolean when entering/exiting the trigger
+                {
+                    if (Input.GetButtonDown("Create Fire Golem"))
                     {
-                        animPlayer.SetFloat("Speed", 0f); // Idle
-                        speed = 15;
+                        gameManager.FireGolemCreation();
+                    }
+                    else if (Input.GetButtonDown("Create Water Golem"))
+                    {
+                        gameManager.WaterGolemCreation();
+                    }
+                    else if (Input.GetButtonDown("Create Earth Golem"))
+                    {
+                        gameManager.EarthGolemCreation();
                     }
                 }
 
+                if (isWithinEarthBase)
+                {
+                    gameManager.EarthBase();
+                }
+
+                if (isWithinFireBase)
+                {
+                    gameManager.FireBase();
+                }
+
+                if (isWithinWaterBase)
+                {
+                    gameManager.WaterBase();
+                }
             }
+
             else
             {
-                //animPlayer.SetBool("Jump", true);
-                velocity.y += gravity * Time.deltaTime;
-                speed = 15;
-            }
+                mainCam.enabled = false;
+                deathCam.enabled = true;
+                animPlayer.SetBool("Death", true);
+                animPlayer.SetBool("Jump", false);
+                particles.Stop();
+                defeatText.SetActive(true);
+                gameManager.fireIcon.SetActive(false);
+                gameManager.waterIcon.SetActive(false);
+                gameManager.earthIcon.SetActive(false);
+                gameManager.enemyBaseIcon.SetActive(false);
 
-            controller.Move(velocity * Time.deltaTime);
-
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-
-            transform.Rotate(0, mouseX, 0);
-            rotationX = Mathf.Clamp(rotationX, -verticalRotationLimit, verticalRotationLimit);
-
-            if (isWithinHomeBase) // Assuming you set this boolean when entering/exiting the trigger
-            {
-                if (Input.GetButtonDown("Create Fire Golem"))
+                if (!deathSound)
                 {
-                    gameManager.FireGolemCreation();
+                    audioSources[0].Play();
+                    deathSound = true;
                 }
-                else if (Input.GetButtonDown("Create Water Golem"))
-                {
-                    gameManager.WaterGolemCreation();
-                }
-                else if (Input.GetButtonDown("Create Earth Golem"))
-                {
-                    gameManager.EarthGolemCreation();
-                }
+
+                StartCoroutine(Restart(2.0f));
             }
-
-            if (isWithinEarthBase)
-            {
-                gameManager.EarthBase();
-            }
-
-            if (isWithinFireBase)
-            {
-                gameManager.FireBase();
-            }
-
-            if (isWithinWaterBase)
-            {
-                gameManager.WaterBase();
-            }
-        }
-
-        else
-        {
-            mainCam.enabled = false;
-            deathCam.enabled = true;
-            animPlayer.SetBool("Death", true);
-            animPlayer.SetBool("Jump", false);
-            particles.Stop();
-            defeatText.SetActive(true);
-            gameManager.fireIcon.SetActive(false);
-            gameManager.waterIcon.SetActive(false);
-            gameManager.earthIcon.SetActive(false);
-            gameManager.enemyBaseIcon.SetActive(false);
-
-            if (!deathSound)
-            {
-                audioSources[0].Play();
-                deathSound = true;
-            }
-
-            StartCoroutine(Restart(2.0f));
         }
     }
 

@@ -8,14 +8,12 @@ public class EarthRuneMaterial : MonoBehaviour
 
     private GameManager gameManager;
     private Renderer rend;
-    private GameMusic sounds;
 
     // Start is called before the first frame update
     void Start()
     {
         rend = GetComponent<Renderer>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        sounds = GameObject.Find("Game Music").GetComponent<GameMusic>();
     }
 
     // Update is called once per frame
@@ -54,8 +52,6 @@ public class EarthRuneMaterial : MonoBehaviour
             if (CompareTag("EarthRune5"))
             {
                 rend.material = newMaterial;
-                gameManager.earthRuneActivated = true;
-                sounds.EarthRune();
             }
         }
     }

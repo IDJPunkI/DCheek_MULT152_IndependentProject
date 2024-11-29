@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     public GameObject waterIcon;
     public GameObject earthIcon;
     public GameObject enemyBaseIcon;
+    public GameObject victoryImage;
+    public GameObject menuButton;
 
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
     public bool waterDestructible = false;
     public bool fireKey = false;
     public bool earthRuneActivated = false;
+    public bool victorious = false;
 
     private bool[] Golems = new bool[3];
 
@@ -154,6 +157,26 @@ public class GameManager : MonoBehaviour
         {
             Golems[2] = false;
         }
+
+        if (EarthRuneActive == 5 && earthRuneActivated == false)
+        {
+            earthRuneActivated = true;
+            sounds.EarthRune();
+        }
+
+        if (enemyBases == 0 && victorious == false)
+        {
+            StartCoroutine(GameEnd(1.25f));
+        }
+    }
+
+    IEnumerator GameEnd(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        victorious = true;
+        sounds.Victory();
+        victoryImage.SetActive(true);
+        menuButton.SetActive(true);
     }
 
     public void AddCrystal(string crystalType)
@@ -202,6 +225,7 @@ public class GameManager : MonoBehaviour
         Golems[2] = false;
         enemyBases = 4;
         bigEnemyCount = 0;
+        victorious = false;
     }
 
     public void FireGolemCreation()

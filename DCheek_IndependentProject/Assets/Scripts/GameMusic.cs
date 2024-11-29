@@ -22,6 +22,7 @@ public class GameMusic : MonoBehaviour
         if (playerController.death == true)
         {
             audioSources[0].Stop();
+            audioSources[4].Stop();
         }
     }
 
@@ -61,6 +62,22 @@ public class GameMusic : MonoBehaviour
         if (!audioSources[0].isPlaying)
         {
             audioSources[0].Play();
+        }
+    }
+
+    public void Victory()
+    {
+        if (audioSources[4].isPlaying)
+        {
+            audioSources[4].Stop();
+        }
+        if (audioSources[0].isPlaying)
+        {
+            audioSources[0].Stop();
+        }
+        if (!audioSources[5].isPlaying)
+        {
+            audioSources[5].Play();
         }
     }
 }

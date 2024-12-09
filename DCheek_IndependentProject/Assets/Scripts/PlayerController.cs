@@ -206,6 +206,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (other.CompareTag("EggBox"))
+        {
+            gameManager.easterEgg = true;
+        }
+
         if (other.CompareTag("Key"))
         {
             gameManager.fireKey = true;

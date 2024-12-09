@@ -35,6 +35,7 @@ TagManager:
   - EarthRune5
   - IceOrb
   - MageAttack
+  - EggBox
   layers:
   - Default
   - TransparentFX

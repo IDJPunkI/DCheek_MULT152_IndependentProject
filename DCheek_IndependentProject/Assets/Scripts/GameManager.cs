@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     public GameObject enemyBaseIcon;
     public GameObject victoryImage;
     public GameObject menuButton;
+    public GameObject fGolem;
+    public GameObject wGolem;
+    public GameObject eGolem;
 
     public int FireCrystal = 0;
     public int WaterCrystal = 0;
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour
     public bool fireKey = false;
     public bool earthRuneActivated = false;
     public bool victorious = false;
+    public bool easterEgg = false;
 
     private bool[] Golems = new bool[3];
 
@@ -168,6 +172,19 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(GameEnd(1.25f));
         }
+
+        if (easterEgg == true)
+        {
+            fGolem.SetActive(true);
+            wGolem.SetActive(true);
+            eGolem.SetActive(true);
+        }
+        else
+        {
+            fGolem.SetActive(false);
+            wGolem.SetActive(false);
+            eGolem.SetActive(false);
+        }
     }
 
     IEnumerator GameEnd(float delay)
@@ -226,6 +243,7 @@ public class GameManager : MonoBehaviour
         enemyBases = 4;
         bigEnemyCount = 0;
         victorious = false;
+        easterEgg = false;
     }
 
     public void FireGolemCreation()
